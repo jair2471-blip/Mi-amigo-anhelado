@@ -2,90 +2,139 @@
 import PageLayout from '../layouts/PageLayout.astro';
 ---
 
-<PageLayout title="Bienvenido">
-	<div class="hero">
-		<h1>📖 Mi Amigo Anhelado</h1>
-		<p class="subtitle">Tu compañía diaria en la lectura de la Palabra.</p>
-		<div class="cta-container">
-			<a href="/app-biblia" class="btn-primary">Comenzar Lectura Hoy</a>
-		</div>
-	</div>
+<PageLayout title="Inicio">
+  <section class="hero">
+    <div class="hero-content">
+      <span class="fade-in subtitle">BIENVENIDO A</span>
+      <h1 class="fade-in title">Mi Amigo Anhelado</h1>
+      <p class="fade-in description">
+        La enseñanza pura de Dios y el Señor Jesucristo, <br/> 
+        sin ruido, sin filtros, solo la Verdad que liberta.
+      </p>
+      
+      <div class="hero-actions fade-in">
+        <a href="/app-biblia" class="btn-primary">Comenzar Lectura</a>
+        <a href="/reflexiones" class="btn-secondary">Cápsulas de Verdad</a>
+      </div>
+    </div>
+  </section>
 
-	<section class="features">
-		<div class="card">
-			<span class="icon">🕊️</span>
-			<h3>Paz Diaria</h3>
-			<p>Un espacio diseñado para que te encuentres con Dios sin distracciones.</p>
-		</div>
-		<div class="card">
-			<span class="icon">⏳</span>
-			<h3>Plan 365</h3>
-			<p>Acompañamiento constante para completar tu meta de leer la Biblia este año.</p>
-		</div>
-		<div class="card">
-			<span class="icon">📱</span>
-			<h3>En cualquier lugar</h3>
-			<p>Lleva tu lectura en el celular, la tablet o la computadora siempre contigo.</p>
-		</div>
-	</section>
+  <section class="features">
+    <div class="feature-card">
+      <div class="icon">📖</div>
+      <h3>Escritura Pura</h3>
+      <p>Navega por las palabras de los apóstoles y el Maestro en una interfaz limpia diseñada para la meditación.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">✨</div>
+      <h3>Sin Distracciones</h3>
+      <p>Un espacio libre de publicidad y opiniones humanas. Solo tú y la Palabra de Vida.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🌱</div>
+      <h3>Crecimiento Diario</h3>
+      <p>Un plan de 365 días para recorrer todo el consejo de Dios de manera ordenada y profunda.</p>
+    </div>
+  </section>
 
-	<style>
-		.hero {
-			text-align: center;
-			padding: 4rem 1rem;
-			background: linear-gradient(to bottom, #f0f4f8, #ffffff);
-			border-radius: 12px;
-			margin-bottom: 3rem;
-		}
-		h1 {
-			font-size: 3rem;
-			color: #2c3e50;
-			margin-bottom: 0.5rem;
-		}
-		.subtitle {
-			font-size: 1.25rem;
-			color: #5d6d7e;
-			margin-bottom: 2rem;
-		}
-		.btn-primary {
-			background-color: #3498db;
-			color: white;
-			padding: 1rem 2rem;
-			border-radius: 50px;
-			text-decoration: none;
-			font-weight: bold;
-			transition: transform 0.2s, background-color 0.2s;
-			display: inline-block;
-		}
-		.btn-primary:hover {
-			background-color: #2980b9;
-			transform: scale(1.05);
-		}
-		.features {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-			gap: 2rem;
-		}
-		.card {
-			padding: 1.5rem;
-			background: white;
-			border-radius: 8px;
-			box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-			text-align: center;
-			border: 1px solid #eaeaea;
-		}
-		.icon {
-			font-size: 2.5rem;
-			display: block;
-			margin-bottom: 1rem;
-		}
-		h3 {
-			color: #2c3e50;
-			margin-bottom: 1rem;
-		}
-		p {
-			color: #7f8c8d;
-			line-height: 1.5;
-		}
-	</style>
+  <style>
+    /* Hero Section */
+    .hero {
+      height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: radial-gradient(circle at center, #ffffff 0%, #f9fbf9 100%);
+    }
+
+    .subtitle {
+      color: #d4a574;
+      letter-spacing: 5px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 10vw, 5rem);
+      color: #1a4d2e;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+    }
+
+    .description {
+      font-size: 1.25rem;
+      color: #5d6d7e;
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.6;
+    }
+
+    /* Botones */
+    .hero-actions {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background: #1a4d2e;
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 10px 20px rgba(26, 77, 46, 0.2);
+      transition: all 0.3s;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #1a4d2e;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      border: 2px solid #1a4d2e;
+      transition: all 0.3s;
+    }
+
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(26, 77, 46, 0.3); }
+    .btn-secondary:hover { background: #f0f4f1; }
+
+    /* Features Section */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      padding: 5rem 1rem;
+      border-top: 1px solid #eee;
+    }
+
+    .feature-card {
+      text-align: center;
+    }
+
+    .feature-card .icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .feature-card h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #1a202c; margin-bottom: 1rem; }
+    .feature-card p { color: #718096; line-height: 1.6; }
+
+    /* Animaciones */
+    .fade-in {
+      animation: fadeIn ease 1.5s;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .hero-actions { flex-direction: column; }
+      .title { font-size: 3rem; }
+    }
+  </style>
 </PageLayout>

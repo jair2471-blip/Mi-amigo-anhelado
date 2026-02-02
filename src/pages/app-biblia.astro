@@ -2,14 +2,9 @@
 import PageLayout from '../layouts/PageLayout.astro';
 ---
 
-<PageLayout title="Mi Amigo Anhelado">
-  <h1>Bienvenido a Mi Amigo Anhelado</h1>
-</PageLayout>
+<PageLayout title="Biblia 365 - Mi Amigo Anhelado">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" is:inline></script>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
   <style is:inline>
     :root {
@@ -31,6 +26,7 @@ import PageLayout from '../layouts/PageLayout.astro';
       --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.12);
       --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.15);
       --shadow-xl: 0 30px 60px rgba(0, 0, 0, 0.2);
+      --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     body.dark-mode {
@@ -66,12 +62,12 @@ import PageLayout from '../layouts/PageLayout.astro';
       color: var(--text-main);
       font-family: 'Crimson Text', Georgia, serif;
       line-height: 1.8;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.4s var(--transition-smooth);
       position: relative;
       overflow-x: hidden;
     }
 
-    /* Patrón de fondo decorativo */
+    /* Patrón de fondo decorativo mejorado */
     body::before {
       content: '';
       position: fixed;
@@ -79,18 +75,20 @@ import PageLayout from '../layouts/PageLayout.astro';
       left: 0;
       right: 0;
       bottom: 0;
-      background-image:
-        radial-gradient(circle at 20% 30%, rgba(212, 165, 116, 0.03) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(26, 77, 46, 0.03) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(212, 165, 116, 0.02) 0%, transparent 70%);
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(212, 165, 116, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(26, 77, 46, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(212, 165, 116, 0.03) 0%, transparent 70%);
       pointer-events: none;
       z-index: 0;
+      opacity: 1;
+      transition: opacity 0.4s;
     }
 
     body.dark-mode::before {
-      background-image:
-        radial-gradient(circle at 20% 30%, rgba(82, 183, 136, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(244, 162, 97, 0.05) 0%, transparent 50%);
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(82, 183, 136, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(244, 162, 97, 0.06) 0%, transparent 50%);
     }
 
     /* Contenedor principal */
@@ -102,11 +100,11 @@ import PageLayout from '../layouts/PageLayout.astro';
       z-index: 1;
     }
 
-    /* Header elegante */
+    /* Header elegante y mejorado */
     .app-header {
       text-align: center;
-      margin-bottom: 3rem;
-      animation: fadeInDown 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-bottom: 2.5rem;
+      animation: fadeInDown 0.8s var(--transition-smooth);
     }
 
     @keyframes fadeInDown {
@@ -130,7 +128,8 @@ import PageLayout from '../layouts/PageLayout.astro';
       background-clip: text;
       margin-bottom: 0.5rem;
       letter-spacing: -0.02em;
-      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      position: relative;
+      display: inline-block;
     }
 
     .app-subtitle {
@@ -142,11 +141,93 @@ import PageLayout from '../layouts/PageLayout.astro';
       margin-bottom: 1rem;
     }
 
-    #diaActual {
-      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-      color: var(--accent);
-      font-weight: 600;
+    /* Progress Ring - NUEVO */
+    .progress-ring {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .ring-container {
+      position: relative;
+      width: 120px;
+      height: 120px;
+    }
+
+    .ring-svg {
+      transform: rotate(-90deg);
+    }
+
+    .ring-bg {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: 8;
+    }
+
+    .ring-progress {
+      fill: none;
+      stroke: url(#gradient);
+      stroke-width: 8;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 1s var(--transition-smooth);
+    }
+
+    .ring-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .ring-day {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      font-family: 'Playfair Display', serif;
+    }
+
+    .ring-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
       letter-spacing: 0.1em;
+    }
+
+    .progress-info {
+      text-align: left;
+    }
+
+    .info-date {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .info-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .stat-badge {
+      background: var(--accent);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
     }
 
     /* Panel de control mejorado */
@@ -166,7 +247,7 @@ import PageLayout from '../layouts/PageLayout.astro';
       box-shadow: var(--shadow-lg);
       border: 2px solid var(--border);
       margin-bottom: 3rem;
-      animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s backwards;
+      animation: slideInUp 0.6s var(--transition-smooth) 0.2s backwards;
     }
 
     @keyframes slideInUp {
@@ -181,47 +262,90 @@ import PageLayout from '../layouts/PageLayout.astro';
     }
 
     .btn-tool {
-      /* Fondo verde sólido y oscuro para que el blanco resalte sí o sí */
-      background: #1a4d2e !important; 
-      color: #ffffff !important;
-      
-      /* Borde dorado más marcado */
-      border: 2px solid #d4a574 !important;
-      
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: #ffffff;
+      border: none;
       font-size: 0.95rem;
       cursor: pointer;
-      padding: 0.75rem 1.2rem;
-      border-radius: 12px;
+      padding: 0.75rem 1.5rem;
+      border-radius: 14px;
+      transition: all 0.3s var(--transition-smooth);
       display: flex;
       align-items: center;
       gap: 0.6rem;
-      font-weight: 800; /* Texto bien grueso */
+      font-weight: 600;
       font-family: 'Crimson Text', serif;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(26, 77, 46, 0.3);
+      position: relative;
+      overflow: hidden;
     }
 
-    /* Esto obliga a que el texto y los iconos dentro del botón sean blancos */
-    .btn-tool, 
-    .btn-tool span, 
-    .btn-tool i {
-      color: #ffffff !important;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* Sombrita al texto para más claridad */
+    .btn-tool::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.6s;
+    }
+
+    .btn-tool:hover::before {
+      left: 100%;
     }
 
     .btn-tool:hover {
-      background: #d4a574 !important; /* Cambia a dorado al pasar el mouse */
-      color: #1a4d2e !important;
-      transform: scale(1.05);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(26, 77, 46, 0.4);
     }
 
-    /* Para que el texto no se vea opaco al pasar el mouse */
-    .btn-tool:hover * {
-      color: #1a4d2e !important;
-      text-shadow: none;
+    .btn-tool:active {
+      transform: translateY(-1px) scale(1);
     }
 
-    /* Acordeones majestuosos */
+    .control-group {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    /* Búsqueda rápida - NUEVO */
+    .search-container {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 2rem;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 1rem 1.5rem 1rem 3.5rem;
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      background: var(--surface);
+      color: var(--text-main);
+      font-family: 'Crimson Text', serif;
+      font-size: 1rem;
+      transition: all 0.3s var(--transition-smooth);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(212, 165, 116, 0.1);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1.25rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 1.25rem;
+    }
+
+    /* Acordeones majestuosos mejorados */
     .capitulo-acordeon {
       background: var(--surface);
       backdrop-filter: blur(15px);
@@ -230,22 +354,15 @@ import PageLayout from '../layouts/PageLayout.astro';
       border: 2px solid var(--border);
       overflow: hidden;
       box-shadow: var(--shadow-md);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      animation: cardReveal 0.6s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+      transition: all 0.4s var(--transition-smooth);
+      animation: cardReveal 0.6s var(--transition-smooth) backwards;
     }
 
-    .capitulo-acordeon:nth-child(1) {
-      animation-delay: 0.1s;
-    }
-    .capitulo-acordeon:nth-child(2) {
-      animation-delay: 0.2s;
-    }
-    .capitulo-acordeon:nth-child(3) {
-      animation-delay: 0.3s;
-    }
-    .capitulo-acordeon:nth-child(4) {
-      animation-delay: 0.4s;
-    }
+    .capitulo-acordeon:nth-child(1) { animation-delay: 0.1s; }
+    .capitulo-acordeon:nth-child(2) { animation-delay: 0.2s; }
+    .capitulo-acordeon:nth-child(3) { animation-delay: 0.3s; }
+    .capitulo-acordeon:nth-child(4) { animation-delay: 0.4s; }
+    .capitulo-acordeon:nth-child(5) { animation-delay: 0.5s; }
 
     @keyframes cardReveal {
       from {
@@ -261,10 +378,12 @@ import PageLayout from '../layouts/PageLayout.astro';
     .capitulo-acordeon:hover {
       box-shadow: var(--shadow-lg);
       transform: translateY(-4px);
+      border-color: var(--accent);
     }
 
     .capitulo-acordeon[open] {
       box-shadow: var(--shadow-xl);
+      border-color: var(--accent);
     }
 
     .header-info {
@@ -275,7 +394,7 @@ import PageLayout from '../layouts/PageLayout.astro';
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s var(--transition-smooth);
       position: relative;
       overflow: hidden;
     }
@@ -287,9 +406,9 @@ import PageLayout from '../layouts/PageLayout.astro';
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
       transform: translateX(-100%);
-      transition: transform 0.6s;
+      transition: transform 0.8s;
     }
 
     .header-info:hover::before {
@@ -307,18 +426,30 @@ import PageLayout from '../layouts/PageLayout.astro';
       font-weight: 700;
       color: #ffffff;
       letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .chapter-badge {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: 'Crimson Text', serif;
     }
 
     .header-info span {
       font-size: 1.5rem;
-      transition: transform 0.3s;
+      transition: transform 0.3s var(--transition-smooth);
     }
 
     .capitulo-acordeon[open] .header-info span {
       transform: rotate(180deg);
     }
 
-    /* Versículos elegantes */
+    /* Versículos elegantes mejorados */
     .versiculos {
       padding: 2.5rem 2rem;
       font-size: var(--font-size, 21px);
@@ -329,7 +460,7 @@ import PageLayout from '../layouts/PageLayout.astro';
     .versiculo {
       padding: 1.25rem 1.5rem;
       border-radius: 16px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s var(--transition-smooth);
       cursor: pointer;
       margin-bottom: 0.75rem;
       border-left: 4px solid transparent;
@@ -344,7 +475,7 @@ import PageLayout from '../layouts/PageLayout.astro';
       bottom: 0;
       width: 0;
       background: linear-gradient(90deg, var(--accent), transparent);
-      transition: width 0.3s;
+      transition: width 0.4s var(--transition-smooth);
       border-radius: 16px 0 0 16px;
       opacity: 0.1;
     }
@@ -363,9 +494,17 @@ import PageLayout from '../layouts/PageLayout.astro';
     .versiculo.active {
       background: linear-gradient(135deg, rgba(212, 165, 116, 0.15) 0%, rgba(212, 165, 116, 0.05) 100%);
       border-left-color: var(--accent);
-      box-shadow:
-        0 0 0 3px rgba(212, 165, 116, 0.2),
-        var(--shadow-md);
+      box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.2), var(--shadow-md);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.2), var(--shadow-md);
+      }
+      50% {
+        box-shadow: 0 0 0 6px rgba(212, 165, 116, 0.3), var(--shadow-lg);
+      }
     }
 
     .versiculo .num {
@@ -376,32 +515,45 @@ import PageLayout from '../layouts/PageLayout.astro';
       font-family: 'Playfair Display', serif;
     }
 
-    /* Estilos de resaltado */
+    /* Palabras de Cristo en rojo */
+    .txt b {
+      color: #b91c1c;
+      font-weight: 600;
+    }
+
+    body.dark-mode .txt b {
+      color: #ff6b6b;
+    }
+
+    /* Estilos de resaltado mejorados */
     .sub-yellow {
       background: linear-gradient(135deg, #fff59d 0%, #ffeaa7 100%);
       color: #1a202c;
-      padding: 0.25rem 0.5rem;
+      padding: 0.3rem 0.6rem;
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(255, 245, 157, 0.4);
+      transition: all 0.3s var(--transition-smooth);
     }
 
     .sub-green {
       background: linear-gradient(135deg, #a5d6a7 0%, #81c784 100%);
       color: #1a202c;
-      padding: 0.25rem 0.5rem;
+      padding: 0.3rem 0.6rem;
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(165, 214, 167, 0.4);
+      transition: all 0.3s var(--transition-smooth);
     }
 
     .sub-blue {
       background: linear-gradient(135deg, #90caf9 0%, #64b5f6 100%);
       color: #1a202c;
-      padding: 0.25rem 0.5rem;
+      padding: 0.3rem 0.6rem;
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(144, 202, 249, 0.4);
+      transition: all 0.3s var(--transition-smooth);
     }
 
-    /* Menú de acciones flotante */
+    /* Menú de acciones flotante mejorado */
     .menu-acciones {
       position: fixed;
       bottom: 2rem;
@@ -440,21 +592,46 @@ import PageLayout from '../layouts/PageLayout.astro';
       flex-direction: column;
       align-items: center;
       gap: 0.5rem;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s var(--transition-smooth);
       font-weight: 600;
       font-family: 'Crimson Text', serif;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-action::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: var(--accent);
+      transform: translate(-50%, -50%);
+      transition: width 0.4s, height 0.4s;
+      z-index: -1;
+    }
+
+    .btn-action:hover::before {
+      width: 200px;
+      height: 200px;
     }
 
     .btn-action span {
       font-size: 1.75rem;
+      transition: transform 0.3s var(--transition-smooth);
     }
 
     .btn-action:hover {
-      background: var(--accent);
       color: #1a202c;
       border-color: var(--accent);
       transform: translateY(-5px) scale(1.05);
       box-shadow: 0 8px 20px rgba(212, 165, 116, 0.4);
+    }
+
+    .btn-action:hover span {
+      transform: scale(1.2);
     }
 
     .btn-action:active {
@@ -479,7 +656,7 @@ import PageLayout from '../layouts/PageLayout.astro';
       font-weight: 700;
       font-size: 1rem;
       cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s var(--transition-smooth);
       font-family: 'Crimson Text', serif;
       letter-spacing: 0.05em;
       box-shadow: var(--shadow-md);
@@ -497,9 +674,7 @@ import PageLayout from '../layouts/PageLayout.astro';
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.2);
       transform: translate(-50%, -50%);
-      transition:
-        width 0.6s,
-        height 0.6s;
+      transition: width 0.6s, height 0.6s;
     }
 
     .btn-nav:hover::before {
@@ -523,7 +698,7 @@ import PageLayout from '../layouts/PageLayout.astro';
       min-width: 120px;
     }
 
-    /* Modal biblioteca */
+    /* Modal biblioteca mejorado */
     #modalBiblioteca {
       position: fixed;
       inset: 0;
@@ -537,12 +712,8 @@ import PageLayout from '../layouts/PageLayout.astro';
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .modal-content {
@@ -555,7 +726,7 @@ import PageLayout from '../layouts/PageLayout.astro';
       border: 2px solid var(--accent);
       box-shadow: var(--shadow-xl);
       overflow-y: auto;
-      animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: modalSlideIn 0.4s var(--transition-smooth);
     }
 
     @keyframes modalSlideIn {
@@ -594,16 +765,69 @@ import PageLayout from '../layouts/PageLayout.astro';
       font-family: 'Crimson Text', serif;
       font-weight: 600;
       font-size: 0.95rem;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s var(--transition-smooth);
       box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #gridLibros button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: var(--accent);
+      transform: translate(-50%, -50%);
+      transition: width 0.4s, height 0.4s;
+      z-index: -1;
+    }
+
+    #gridLibros button:hover::before {
+      width: 200px;
+      height: 200px;
     }
 
     #gridLibros button:hover {
-      background: var(--accent);
       color: #1a202c;
       border-color: var(--accent);
       transform: translateY(-4px) scale(1.05);
       box-shadow: var(--shadow-md);
+    }
+
+    /* Toast notifications - NUEVO */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--surface-elevated);
+      color: var(--text-main);
+      padding: 1rem 1.5rem;
+      border-radius: 16px;
+      box-shadow: var(--shadow-xl);
+      border: 2px solid var(--accent);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      opacity: 0;
+      transform: translateX(400px);
+      transition: all 0.4s var(--transition-smooth);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .toast-icon {
+      font-size: 1.5rem;
+    }
+
+    .toast-message {
+      font-weight: 600;
     }
 
     /* Canvas helper oculto */
@@ -621,10 +845,41 @@ import PageLayout from '../layouts/PageLayout.astro';
       border-radius: 20px;
     }
 
-    /* Responsive */
+    /* Loading skeleton - NUEVO */
+    .skeleton {
+      background: linear-gradient(90deg, var(--border) 25%, rgba(212, 165, 116, 0.1) 50%, var(--border) 75%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.5s infinite;
+      border-radius: 16px;
+    }
+
+    @keyframes skeleton-loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Responsive mejorado */
     @media (max-width: 768px) {
       .main-container {
         padding: 1rem;
+      }
+
+      .progress-ring {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .ring-container {
+        width: 100px;
+        height: 100px;
+      }
+
+      .ring-day {
+        font-size: 1.75rem;
+      }
+
+      .progress-info {
+        text-align: center;
       }
 
       .control-panel {
@@ -634,11 +889,9 @@ import PageLayout from '../layouts/PageLayout.astro';
       }
 
       .control-group {
-      display: flex;
-      flex-direction: row; 
-      gap: 0.5rem;
-      align-items: center;
-    }
+        width: 100%;
+        justify-content: center;
+      }
 
       .btn-tool {
         padding: 0.65rem 1.25rem;
@@ -668,6 +921,7 @@ import PageLayout from '../layouts/PageLayout.astro';
         gap: 1rem;
         flex-wrap: wrap;
         justify-content: center;
+        max-width: 90vw;
       }
 
       .btn-action {
@@ -683,6 +937,12 @@ import PageLayout from '../layouts/PageLayout.astro';
       #gridLibros {
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
         gap: 0.75rem;
+      }
+
+      .toast {
+        bottom: 1rem;
+        right: 1rem;
+        left: 1rem;
       }
     }
 
@@ -719,41 +979,46 @@ import PageLayout from '../layouts/PageLayout.astro';
     ::-webkit-scrollbar-thumb:hover {
       background: linear-gradient(180deg, var(--accent) 0%, var(--accent-light) 100%);
     }
-/* --- Mejoras de Oro Puro --- */
-
-/* Color carmesí para las palabras del Maestro (etiqueta <b>) */
-.txt b {
-    color: #b91c1c; 
-    font-weight: 600; /* Un poco de grosor para que se note la autoridad */
-}
-
-/* Ajuste para que en modo oscuro no se pierda el rojo */
-body.dark-mode .txt b {
-    color: #ff6b6b; 
-}
-
-/* Estilo para el botón de Enfoque */
-.btn-tool {
-    background: #f0f4f1;
-    border: 1px solid #d4a574;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all 0.3s ease;
-}
-
-.btn-tool:hover {
-    background: #d4a574;
-    color: white;
-}
   </style>
 
   <div class="main-container">
     <header class="app-header">
       <h1 class="app-title">BIBLIA 365</h1>
-      <p class="app-subtitle">Tu Plan Anual</p>
-      <p id="diaActual"></p>
+      <p class="app-subtitle">Tu Plan Anual de Lectura</p>
+      
+      <!-- Progress Ring -->
+      <div class="progress-ring">
+        <div class="ring-container">
+          <svg class="ring-svg" width="120" height="120">
+            <defs>
+              <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:var(--primary);stop-opacity:1" />
+                <stop offset="100%" style="stop-color:var(--accent);stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <circle class="ring-bg" cx="60" cy="60" r="52" />
+            <circle id="ringProgress" class="ring-progress" cx="60" cy="60" r="52" 
+                    stroke-dasharray="326.73" stroke-dashoffset="326.73" />
+          </svg>
+          <div class="ring-text">
+            <div id="ringDay" class="ring-day">1</div>
+            <div class="ring-label">de 365</div>
+          </div>
+        </div>
+        <div class="progress-info">
+          <div id="infoDate" class="info-date"></div>
+          <div class="info-stats">
+            <div class="stat-item">
+              <span>📖</span>
+              <span id="statChapters">0 capítulos hoy</span>
+            </div>
+            <div class="stat-item">
+              <span>✨</span>
+              <span id="statHighlights">0 versículos resaltados</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </header>
 
     <div class="control-panel">
@@ -767,6 +1032,17 @@ body.dark-mode .txt b {
       <button class="btn-tool" onclick="toggleModo()">
         <span>🌓</span> Tema
       </button>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-container" style="display:none;" id="searchContainer">
+      <span class="search-icon">🔍</span>
+      <input 
+        type="text" 
+        class="search-input" 
+        placeholder="Buscar versículo o libro..." 
+        id="searchInput"
+      />
     </div>
 
     <div id="contenido"></div>
@@ -809,11 +1085,7 @@ body.dark-mode .txt b {
     <div style="font-size: 60px; color: var(--accent); margin-bottom: 30px;">"</div>
     <div id="img-text" style="font-size: 36px; line-height: 1.6; font-style: italic;"></div>
     <div style="font-size: 60px; color: var(--accent); margin-top: 20px;">"</div>
-    <div
-      id="img-ref"
-      style="margin-top: 50px; font-size: 24px; letter-spacing: 6px; border-top: 2px solid var(--accent); display: inline-block; padding-top: 20px;"
-    >
-    </div>
+    <div id="img-ref" style="margin-top: 50px; font-size: 24px; letter-spacing: 6px; border-top: 2px solid var(--accent); display: inline-block; padding-top: 20px;"></div>
   </div>
 
   <div id="modalBiblioteca" onclick="this.style.display='none'">
@@ -823,14 +1095,17 @@ body.dark-mode .txt b {
     </div>
   </div>
 
+  <!-- Toast Container -->
+  <div id="toastContainer"></div>
+
   <script is:inline>
-    const URL_RAW =
-      'https://raw.githubusercontent.com/jair2471-blip/Mi-Amigo-Anhelado/refs/heads/main/biblia-final-perfecta.json';
+    const URL_RAW = 'https://raw.githubusercontent.com/jair2471-blip/Mi-Amigo-Anhelado/refs/heads/main/biblia-final-perfecta.json';
     let bibleData,
       fechaActual = new Date(),
       fontSize = 21,
       selectedVersiculo = null,
-      selectedInfo = '';
+      selectedInfo = '',
+      highlights = JSON.parse(localStorage.getItem('biblia365_highlights') || '{}');
 
     const booksDB = [
       { n: 'Génesis', f: 'genesis', c: 50 },
@@ -906,6 +1181,40 @@ body.dark-mode .txt b {
       for (let i = 1; i <= b.c; i++) plan.push({ n: b.n, f: b.f, c: i });
     });
 
+    // Toast notification
+    function showToast(message, icon = '✓') {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `
+        <span class="toast-icon">${icon}</span>
+        <span class="toast-message">${message}</span>
+      `;
+      document.body.appendChild(toast);
+      
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 400);
+      }, 3000);
+    }
+
+    // Update progress ring
+    function updateProgressRing(day) {
+      const circumference = 2 * Math.PI * 52;
+      const progress = (day / 365) * circumference;
+      const offset = circumference - progress;
+      
+      document.getElementById('ringProgress').style.strokeDashoffset = offset;
+      document.getElementById('ringDay').textContent = day;
+    }
+
+    // Update stats
+    function updateStats(chaptersCount) {
+      const highlightCount = Object.keys(highlights).length;
+      document.getElementById('statChapters').textContent = `${chaptersCount} ${chaptersCount === 1 ? 'capítulo' : 'capítulos'} hoy`;
+      document.getElementById('statHighlights').textContent = `${highlightCount} ${highlightCount === 1 ? 'versículo resaltado' : 'versículos resaltados'}`;
+    }
+
     async function cargarLectura(custom = null) {
       if (!bibleData) {
         bibleData = await (await fetch(URL_RAW)).json();
@@ -916,9 +1225,23 @@ body.dark-mode .txt b {
 
       const start = new Date(fechaActual.getFullYear(), 0, 0);
       const day = Math.floor((fechaActual - start) / 86400000);
-      document.getElementById('diaActual').textContent = `Día ${day} de 365`;
+      
+      // Update progress ring
+      updateProgressRing(day);
+      
+      // Update date
+      const dateStr = fechaActual.toLocaleDateString('es-ES', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      document.getElementById('infoDate').textContent = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
 
       const lectura = custom || plan.slice(Math.floor(((day - 1) * 1189) / 365), Math.floor((day * 1189) / 365));
+      
+      // Update stats
+      updateStats(lectura.length);
 
       document.getElementById('contenido').innerHTML = lectura
         .map((it, idx) => {
@@ -928,18 +1251,22 @@ body.dark-mode .txt b {
           return `
           <details ${idx === 0 ? 'open' : ''} class="capitulo-acordeon">
             <summary class="header-info">
-              <h2>${it.n} ${it.c}</h2>
+              <h2>${it.n} ${it.c} <span class="chapter-badge">${Object.keys(cap).length} v.</span></h2>
               <span>▼</span>
             </summary>
             <div class="versiculos">
               ${Object.entries(cap)
                 .map(
-                  ([n, t]) => `
-                <div class="versiculo" onclick="activarMenu(this, '${it.n} ${it.c}:${n}')">
-                  <span class="num">${n}</span>
-                  <span class="txt">${t}</span>
-                </div>
-              `
+                  ([n, t]) => {
+                    const vId = `${it.f}_${it.c}_${n}`;
+                    const highlightClass = highlights[vId] || '';
+                    return `
+                      <div class="versiculo" onclick="activarMenu(this, '${it.n} ${it.c}:${n}', '${vId}')">
+                        <span class="num">${n}</span>
+                        <span class="txt ${highlightClass}">${t}</span>
+                      </div>
+                    `;
+                  }
                 )
                 .join('')}
             </div>
@@ -949,14 +1276,18 @@ body.dark-mode .txt b {
         .join('');
     }
 
-    window.activarMenu = (el, ref) => {
+    window.activarMenu = (el, ref, vId) => {
       selectedVersiculo = el;
       selectedInfo = ref;
+      window.currentVId = vId;
 
       document.querySelectorAll('.versiculo').forEach((v) => v.classList.remove('active'));
       el.classList.add('active');
 
       document.getElementById('menuAcciones').classList.add('active');
+      
+      // Scroll to verse smoothly
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
     };
 
     window.desactivarMenu = () => {
@@ -965,13 +1296,31 @@ body.dark-mode .txt b {
     };
 
     window.subrayar = (cls) => {
-      selectedVersiculo.querySelector('.txt').classList.toggle(cls);
+      const txtElement = selectedVersiculo.querySelector('.txt');
+      const currentClasses = ['sub-yellow', 'sub-green', 'sub-blue'];
+      
+      // Remove all highlight classes
+      currentClasses.forEach(c => txtElement.classList.remove(c));
+      
+      // Toggle new class
+      if (highlights[window.currentVId] === cls) {
+        delete highlights[window.currentVId];
+        showToast('Resaltado eliminado', '🗑️');
+      } else {
+        txtElement.classList.add(cls);
+        highlights[window.currentVId] = cls;
+        showToast('Versículo resaltado', '✨');
+      }
+      
+      localStorage.setItem('biblia365_highlights', JSON.stringify(highlights));
+      updateStats(plan.slice(Math.floor(((Math.floor((fechaActual - new Date(fechaActual.getFullYear(), 0, 0)) / 86400000) - 1) * 1189) / 365), Math.floor(((Math.floor((fechaActual - new Date(fechaActual.getFullYear(), 0, 0)) / 86400000)) * 1189) / 365)).length);
       desactivarMenu();
     };
 
     window.compartirWhatsApp = () => {
       const texto = selectedVersiculo.querySelector('.txt').innerText;
       window.open(`https://wa.me/?text=${encodeURIComponent('"' + texto + '" - ' + selectedInfo)}`);
+      showToast('Compartiendo en WhatsApp', '💬');
       desactivarMenu();
     };
 
@@ -990,6 +1339,7 @@ body.dark-mode .txt b {
         link.download = `${selectedInfo.replace(/:/g, '-')}.png`;
         link.href = canvas.toDataURL('image/png');
         link.click();
+        showToast('Imagen generada', '🖼️');
       });
 
       desactivarMenu();
@@ -1002,11 +1352,15 @@ body.dark-mode .txt b {
       document.querySelectorAll('.versiculos').forEach((v) => {
         v.style.fontSize = fontSize + 'px';
       });
+      localStorage.setItem('biblia365_fontsize', fontSize);
+      showToast(`Tamaño: ${fontSize}px`, '📏');
     };
 
     window.toggleModo = () => {
       document.body.classList.toggle('dark-mode');
-      localStorage.setItem('biblia365_darkmode', document.body.classList.contains('dark-mode'));
+      const isDark = document.body.classList.contains('dark-mode');
+      localStorage.setItem('biblia365_darkmode', isDark);
+      showToast(isDark ? 'Modo oscuro activado' : 'Modo claro activado', '🌓');
     };
 
     window.abrirBiblioteca = () => {
@@ -1017,6 +1371,7 @@ body.dark-mode .txt b {
       document.getElementById('modalBiblioteca').style.display = 'none';
       cargarLectura([{ n, f, c: 1 }]);
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      showToast(`Leyendo ${n}`, '📖');
     };
 
     window.cambiarDia = (d) => {
@@ -1029,11 +1384,17 @@ body.dark-mode .txt b {
       fechaActual = new Date();
       cargarLectura();
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      showToast('Regresando a hoy', '📅');
     };
 
-    // Cargar modo oscuro guardado
+    // Load saved preferences
     if (localStorage.getItem('biblia365_darkmode') === 'true') {
       document.body.classList.add('dark-mode');
+    }
+    
+    const savedFontSize = localStorage.getItem('biblia365_fontsize');
+    if (savedFontSize) {
+      fontSize = parseInt(savedFontSize);
     }
 
     cargarLectura();

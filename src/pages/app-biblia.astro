@@ -7,71 +7,56 @@ import PageLayout from '../layouts/PageLayout.astro';
 
   <style is:inline>
     :root {
-      --primary: #1a4d2e; --accent: #d4a574; --bg: #faf8f5; --text: #1a202c; --surface: #ffffff;
+      --primary: #1a4d2e; --accent: #d4a574; --bg: #faf8f5; --text: #1a202c; --surface: #ffffff; --border: rgba(0,0,0,0.1);
     }
     body.dark-mode {
-      --bg: #0a0e0d; --text: #f7fafc; --surface: #1a1f1e; --primary: #52b788;
+      --bg: #0a0e0d; --text: #f7fafc; --surface: #1a1f1e; --primary: #52b788; --border: rgba(255,255,255,0.1);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { 
-      background-color: var(--bg); color: var(--text); 
-      font-family: 'Crimson Text', serif; transition: 0.3s;
-    }
+    body { background-color: var(--bg); color: var(--text); font-family: 'Crimson Text', serif; transition: 0.3s; }
+    
     .main-container { max-width: 800px; margin: 0 auto; padding: 20px; }
     
-    /* Header */
+    /* Header y Progreso */
     .app-header { text-align: center; padding: 20px 0; }
     .progress-container { position: relative; width: 100px; height: 100px; margin: 0 auto; }
-    .ring-bg { fill: none; stroke: #ddd; stroke-width: 8; }
+    .ring-bg { fill: none; stroke: var(--border); stroke-width: 8; }
     .ring-active { fill: none; stroke: var(--accent); stroke-width: 8; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; transition: 1s; }
 
-    /* Botones y Panel */
+    /* Controles */
     .panel { 
       position: sticky; top: 10px; background: var(--surface); 
       padding: 15px; border-radius: 15px; display: flex; 
-      justify-content: space-between; z-index: 100; border: 1px solid #ddd;
+      justify-content: space-between; z-index: 100; border: 1px solid var(--border);
       box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 20px;
     }
-    button { 
-      padding: 10px 15px; border: none; border-radius: 8px; 
-      background: var(--primary); color: white; cursor: pointer; font-weight: bold;
-    }
-    button:active { transform: scale(0.95); }
+    button { padding: 10px 15px; border: none; border-radius: 8px; background: var(--primary); color: white; cursor: pointer; font-weight: bold; }
 
-    /* Modal Biblioteca */
-    #modalBiblioteca { 
-      position: fixed; inset: 0; background: rgba(0,0,0,0.8); 
-      display: none; place-items: center; z-index: 1000; 
-    }
-    .modal-content { 
-      background: var(--bg); width: 90%; max-width: 500px; 
-      padding: 20px; border-radius: 20px; max-height: 80vh; overflow-y: auto; 
-    }
-    .grid-libros { 
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); 
-      gap: 10px; margin-top: 20px; 
-    }
-    .btn-lib { background: var(--surface); color: var(--text); border: 1px solid #ddd; font-size: 0.8rem; }
+    /* Biblioteca (El problema que tenías) */
+    #modalBiblioteca { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; place-items: center; z-index: 1000; padding: 20px; }
+    .modal-content { background: var(--bg); width: 100%; max-width: 600px; padding: 25px; border-radius: 20px; max-height: 85vh; overflow-y: auto; }
+    .grid-libros { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; margin-top: 20px; }
+    .btn-lib { background: var(--surface); color: var(--text); border: 1px solid var(--border); padding: 12px 5px; font-size: 0.85rem; }
 
     /* Lectura */
-    .card { background: var(--surface); border-radius: 15px; padding: 20px; margin-bottom: 20px; border: 1px solid #ddd; }
+    .card { background: var(--surface); border-radius: 15px; padding: 25px; margin-bottom: 25px; border: 1px solid var(--border); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
     .v-num { color: var(--accent); font-weight: bold; margin-right: 8px; font-size: 0.9em; }
-    .txt-v { font-size: var(--f-size, 20px); line-height: 1.6; }
+    .txt-v { font-size: var(--f-size, 20px); line-height: 1.7; margin-bottom: 12px; }
 
-    .nav-footer { display: flex; gap: 10px; margin-top: 30px; }
+    .nav-footer { display: flex; gap: 10px; margin-top: 30px; padding-bottom: 50px; }
     .btn-nav { flex: 1; padding: 15px; }
   </style>
 
   <div class="main-container">
     <div class="app-header">
-      <h1 style="font-family: 'Playfair Display';">BIBLIA 365</h1>
+      <h1 style="font-family: 'Playfair Display'; font-size: 2.5rem; color: var(--primary);">BIBLIA 365</h1>
       <div class="progress-container">
         <svg width="100" height="100">
           <circle class="ring-bg" cx="50" cy="50" r="40" />
           <circle id="progreso" class="ring-active" cx="50" cy="50" r="40" stroke-dasharray="251.2" stroke-dashoffset="251.2" />
         </svg>
         <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);">
-          <span id="diaLabel" style="font-weight:bold; font-size:1.2rem;">1</span>
+          <span id="diaLabel" style="font-weight:bold; font-size:1.4rem;">1</span>
         </div>
       </div>
     </div>
@@ -85,7 +70,9 @@ import PageLayout from '../layouts/PageLayout.astro';
       </div>
     </div>
 
-    <div id="lector"></div>
+    <div id="lector">
+      <p style="text-align:center; padding: 50px;">Cargando tu Biblia desde el archivo local...</p>
+    </div>
 
     <div class="nav-footer">
       <button class="btn-nav" onclick="window.irDia(-1)">◀ Ant.</button>
@@ -96,83 +83,44 @@ import PageLayout from '../layouts/PageLayout.astro';
 
   <div id="modalBiblioteca" onclick="if(event.target==this) window.cerrarLibros()">
     <div class="modal-content">
-      <h3 style="text-align:center">Selecciona un Libro</h3>
+      <h2 style="text-align:center; font-family: 'Playfair Display';">Biblioteca</h2>
       <div id="listaLibros" class="grid-libros"></div>
-      <button onclick="window.cerrarLibros()" style="width:100%; margin-top:20px; background:var(--accent)">Cerrar</button>
+      <button onclick="window.cerrarLibros()" style="width:100%; margin-top:25px; background:var(--accent)">Cerrar</button>
     </div>
   </div>
 
   <script is:inline>
-    // 1. Datos de la Biblia
-    const BOOKS = [
+    // 1. Estructura y Plan
+    const ESTRUCTURA = [
       {n:'Génesis', f:'genesis', c:50}, {n:'Éxodo', f:'exodo', c:40}, {n:'Levítico', f:'levitico', c:27},
       {n:'Números', f:'numeros', c:36}, {n:'Deuteronomio', f:'deuteronomio', c:34}, {n:'Josué', f:'josue', c:24},
       {n:'Jueces', f:'jueces', c:21}, {n:'Rut', f:'rut', c:4}, {n:'1 Samuel', f:'1_samuel', c:31},
       {n:'2 Samuel', f:'2_samuel', c:24}, {n:'1 Reyes', f:'1_reyes', c:22}, {n:'2 Reyes', f:'2_reyes', c:25},
       {n:'Mateo', f:'mateo', c:28}, {n:'Marcos', f:'marcos', c:16}, {n:'Lucas', f:'lucas', c:24},
       {n:'Juan', f:'juan', c:21}, {n:'Hechos', f:'hechos', c:28}, {n:'Apocalipsis', f:'apocalipsis', c:22}
+      // Puedes añadir más libros aquí siguiendo el mismo formato
     ];
 
     let plan = [];
-    BOOKS.forEach(b => { for(let i=1; i<=b.c; i++) plan.push({n:b.n, f:b.f, c:i}); });
+    ESTRUCTURA.forEach(b => { for(let i=1; i<=b.c; i++) plan.push({n:b.n, f:b.f, c:i}); });
 
+    let bibliaJSON = null;
     let fecha = new Date();
     let fontSize = 20;
 
-    // 2. FUNCIONES GLOBALES (Atadas a window para que los botones funcionen)
-    window.abrirLibros = () => {
-      const lista = document.getElementById('listaLibros');
-      lista.innerHTML = BOOKS.map(b => `
-        <button class="btn-lib" onclick="window.cargarLibro('${b.f}', '${b.n}')">${b.n}</button>
-      `).join('');
-      document.getElementById('modalBiblioteca').style.display = 'grid';
-    };
-
-    window.cerrarLibros = () => document.getElementById('modalBiblioteca').style.display = 'none';
-
-    window.cargarLibro = (f, n) => {
-      window.cerrarLibros();
-      renderLectura([{f, n, c: 1}]);
-    };
-
-    window.zoom = (n) => {
-      fontSize += n;
-      document.documentElement.style.setProperty('--f-size', fontSize + 'px');
-    };
-
-    window.modoNoche = () => document.body.classList.toggle('dark-mode');
-
-    window.irDia = (d) => {
-      fecha.setDate(fecha.getDate() + d);
-      window.iniciarApp();
-    };
-
-    window.irHoy = () => {
-      fecha = new Date();
-      window.iniciarApp();
-    };
-
-    async function renderLectura(items) {
-      const lector = document.getElementById('lector');
-      lector.innerHTML = '<p style="text-align:center">Cargando Palabra...</p>';
-      
-      let html = '';
-      for (const it of items) {
-        try {
-          const res = await fetch(`https://bible-api.deno.dev/api/read/rvv1960/${it.f}/${it.c}`);
-          const data = await res.json();
-          html += `
-            <div class="card">
-              <h2 style="color:var(--primary); margin-bottom:15px; border-bottom:2px solid var(--accent); display:inline-block">${it.n} ${it.c}</h2>
-              <div>
-                ${data.vers.map(v => `<p style="margin-bottom:10px" class="txt-v"><span class="v-num">${v.number}</span>${v.verse}</p>`).join('')}
-              </div>
-            </div>
-          `;
-        } catch (e) { console.error(e); }
+    // 2. Funciones de Carga
+    async function cargarArchivoJSON() {
+      try {
+        const res = await fetch('/biblia.json'); // Lee el archivo que subiste a public
+        bibliaJSON = await res.json();
+        window.iniciarApp();
+      } catch (e) {
+        document.getElementById('lector').innerHTML = `
+          <div style="text-align:center; color:red; padding:20px;">
+            <h3>¡Opa! No encontré el archivo biblia.json</h3>
+            <p>Revisa que esté dentro de la carpeta <b>public/</b></p>
+          </div>`;
       }
-      lector.innerHTML = html || '<p>Error de conexión</p>';
-      window.scrollTo(0,0);
     }
 
     window.iniciarApp = () => {
@@ -188,7 +136,61 @@ import PageLayout from '../layouts/PageLayout.astro';
       renderLectura(hoyItems);
     };
 
-    // Arrancar
-    document.addEventListener('DOMContentLoaded', window.iniciarApp);
+    function renderLectura(items) {
+      const lector = document.getElementById('lector');
+      let html = '';
+
+      items.forEach(it => {
+        // Buscamos el libro en el JSON (manejamos mayúsculas/minúsculas)
+        const libroData = bibliaJSON[it.n] || bibliaJSON[it.f] || bibliaJSON[it.n.toLowerCase()];
+        const capituloData = libroData ? libroData[it.c] : null;
+
+        html += `<div class="card">
+          <h2 style="color:var(--primary); margin-bottom:20px; border-bottom:2px solid var(--accent); display:inline-block">${it.n} ${it.c}</h2>
+          <div>`;
+
+        if (capituloData) {
+          // El JSON puede ser un objeto de versículos o un array
+          Object.entries(capituloData).forEach(([num, texto]) => {
+            html += `<p class="txt-v"><span class="v-num">${num}</span>${texto}</p>`;
+          });
+        } else {
+          html += `<p>Capítulo no encontrado en el JSON.</p>`;
+        }
+
+        html += `</div></div>`;
+      });
+
+      lector.innerHTML = html;
+      window.scrollTo(0,0);
+    }
+
+    // 3. Interfaz (Biblioteca y Botones)
+    window.abrirLibros = () => {
+      const lista = document.getElementById('listaLibros');
+      lista.innerHTML = ESTRUCTURA.map(b => `
+        <button class="btn-lib" onclick="window.seleccionarLibro('${b.f}', '${b.n}')">${b.n}</button>
+      `).join('');
+      document.getElementById('modalBiblioteca').style.display = 'grid';
+    };
+
+    window.cerrarLibros = () => document.getElementById('modalBiblioteca').style.display = 'none';
+
+    window.seleccionarLibro = (f, n) => {
+      window.cerrarLibros();
+      renderLectura([{f, n, c: 1}]);
+    };
+
+    window.zoom = (n) => {
+      fontSize += n;
+      document.documentElement.style.setProperty('--f-size', fontSize + 'px');
+    };
+
+    window.modoNoche = () => document.body.classList.toggle('dark-mode');
+    window.irDia = (d) => { fecha.setDate(fecha.getDate() + d); window.iniciarApp(); };
+    window.irHoy = () => { fecha = new Date(); window.iniciarApp(); };
+
+    // Arrancar al cargar la página
+    document.addEventListener('DOMContentLoaded', cargarArchivoJSON);
   </script>
 </PageLayout>

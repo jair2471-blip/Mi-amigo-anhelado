@@ -1368,10 +1368,24 @@ import PageLayout from '../layouts/PageLayout.astro';
     };
 
     window.seleccionarLibro = (f, n) => {
+      // Encontrar el libro en la base de datos para saber cuántos capítulos tiene
+      const libro = booksDB.find(b => b.f === f);
+      
+      if (!libro) {
+        showToast('Error: Libro no encontrado', '⚠️');
+        return;
+      }
+      
+      // Crear array con TODOS los capítulos del libro
+      const todosLosCapitulos = [];
+      for (let i = 1; i <= libro.c; i++) {
+        todosLosCapitulos.push({ n: libro.n, f: libro.f, c: i });
+      }
+      
       document.getElementById('modalBiblioteca').style.display = 'none';
-      cargarLectura([{ n, f, c: 1 }]);
+      cargarLectura(todosLosCapitulos);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      showToast(`Leyendo ${n}`, '📖');
+      showToast(`Leyendo ${n} completo (${libro.c} capítulos)`, '📖');
     };
 
     window.cambiarDia = (d) => {

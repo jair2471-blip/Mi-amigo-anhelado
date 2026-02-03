@@ -2,7 +2,7 @@
 import PageLayout from '../layouts/PageLayout.astro';
 ---
 
-<PageLayout title="Inicio">
+<PageLayout title="Mi Amigo Anhelado - Inicio">
   <section class="hero">
     <div class="hero-content">
       <span class="fade-in subtitle">BIENVENIDO A</span>
@@ -22,24 +22,10 @@ import PageLayout from '../layouts/PageLayout.astro';
       </div>
       
       <div class="hero-actions fade-in">
-        <a href="/app-biblia" class="btn-primary">Comenzar Lectura</a>
-        <a href="/reflexiones" class="btn-secondary">Cápsulas de Verdad</a>
+        <a href="/app-biblia" class="btn-primary">📖 Comenzar Lectura</a>
+        <a href="/vivencias" class="btn-secondary">🧔 Personajes</a>
       </div>
     </div>
-<div class="toolbar">
-  <button class="btn-top" onclick="window.abrirBib()">📚 Libros</button>
-  
-  <a href="/vivencias" style="text-decoration:none;">
-    <button class="btn-top" style="background:var(--accent)">🧔 Personajes</button>
-  </a>
-
-  <div style="display:flex; gap:8px;">
-    <button class="btn-top" onclick="window.zoom(-2)">A-</button>
-    <button class="btn-top" onclick="window.zoom(2)">A+</button>
-    <button class="btn-top" onclick="window.modoNoche()">🌓</button>
-  </div>
-</div>
-
   </section>
 
   <section class="features">
@@ -61,68 +47,70 @@ import PageLayout from '../layouts/PageLayout.astro';
   </section>
 
   <style>
+    /* Tu estilo original mejorado para centrado */
     .hero {
-      height: 85vh;
+      min-height: 90vh;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       background-color: #f4f1ea;
       background-image: url("https://www.transparenttextures.com/patterns/papyrus.png");
-      box-shadow: inset 0 0 100px rgba(0,0,0,0.05);
       background-attachment: fixed;
       border-bottom: 2px solid #d4a574;
       padding: 2rem;
     }
 
+    .hero-content { max-width: 800px; width: 100%; }
+
     .subtitle { color: #d4a574; letter-spacing: 5px; font-weight: bold; font-size: 0.9rem; display: block; margin-bottom: 1rem; }
     
     .title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
       color: #1a4d2e;
       margin-bottom: 1.5rem;
       line-height: 1.1;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
     }
 
-    .description { font-size: 1.2rem; color: #5d6d7e; max-width: 600px; margin: 0 auto 2rem; line-height: 1.6; }
+    .description { font-size: 1.2rem; color: #5d6d7e; margin: 0 auto 2rem; line-height: 1.6; }
 
-    .hero-actions { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+    .hero-actions { display: flex; gap: 1.5rem; justify-content: center; margin-top: 2rem; }
 
     .btn-primary {
-      background: #1a4d2e; color: white; padding: 1rem 2rem; border-radius: 50px;
-      text-decoration: none; font-weight: bold; box-shadow: 0 10px 20px rgba(26, 77, 46, 0.2); transition: all 0.3s;
+      background: #1a4d2e; color: white; padding: 1.2rem 2.5rem; border-radius: 50px;
+      text-decoration: none; font-weight: bold; transition: all 0.3s;
+      box-shadow: 0 10px 20px rgba(26, 77, 46, 0.2);
     }
 
     .btn-secondary {
-      background: transparent; color: #1a4d2e; padding: 1rem 2rem; border-radius: 50px;
+      background: white; color: #1a4d2e; padding: 1.2rem 2.5rem; border-radius: 50px;
       text-decoration: none; font-weight: bold; border: 2px solid #1a4d2e; transition: all 0.3s;
     }
 
-    .btn-primary:hover { transform: translateY(-3px); }
-    .btn-secondary:hover { background: #f0f4f1; }
+    .btn-primary:hover { transform: translateY(-3px); background: #246b40; }
+    .btn-secondary:hover { background: #f0f4f1; transform: translateY(-3px); }
 
     .mana-diario {
-      margin: 0 auto 2.5rem; max-width: 500px; padding: 1.5rem;
-      background: rgba(212, 165, 116, 0.1); border-radius: 15px;
-      border-left: 4px solid #d4a574; font-family: 'Crimson Text', serif;
+      margin: 2rem auto; max-width: 550px; padding: 2rem;
+      background: white; border-radius: 15px;
+      border-left: 6px solid #d4a574; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     }
 
-    .mana-content p { font-size: 1.25rem; color: #1a4d2e !important; font-style: italic; margin: 0.5rem 0; line-height: 1.4; }
-    .mana-content small { color: #d4a574; font-weight: bold; text-transform: uppercase; display: block; }
-    .mana-icon { display: block; font-size: 1.2rem; }
+    .mana-content p { font-size: 1.4rem; color: #1a4d2e !important; font-style: italic; font-family: 'Crimson Text', serif; margin: 0.5rem 0; }
+    .mana-content small { color: #d4a574; font-weight: bold; text-transform: uppercase; }
 
-    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; padding: 5rem 1.5rem; background: white; }
-    .feature-card { text-align: center; }
-    .feature-card h3 { font-family: 'Playfair Display', serif; color: #1a202c; margin: 1rem 0; }
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem; padding: 5rem 2rem; background: white; max-width: 1100px; margin: 0 auto; }
+    .feature-card { text-align: center; padding: 20px; }
+    .feature-card .icon { font-size: 3rem; margin-bottom: 1rem; }
+    .feature-card h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #1a202c; }
 
     .fade-in { animation: fadeIn ease 1.5s; }
     @keyframes fadeIn { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
 
     @media (max-width: 600px) {
-      .hero-actions { flex-direction: column; width: 100%; }
-      .hero { height: auto; padding: 4rem 1rem; }
+      .hero-actions { flex-direction: column; }
+      .title { font-size: 2.8rem; }
     }
   </style>
 
@@ -132,24 +120,14 @@ import PageLayout from '../layouts/PageLayout.astro';
       { texto: "Yo soy el camino, y la verdad, y la vida.", cita: "Juan 14:6" },
       { texto: "La paz os dejo, mi paz os doy; yo no os la doy como el mundo la da.", cita: "Juan 14:27" },
       { texto: "He aquí yo estoy con vosotros todos los días, hasta el fin del mundo.", cita: "Mateo 28:20" },
-      { texto: "Todo lo puedo en Cristo que me fortalece.", cita: "Filipenses 4:13" },
-      { texto: "No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios.", cita: "Isaías 41:10" },
-      { texto: "Bástate mi gracia; porque mi poder se perfecciona en la debilidad.", cita: "2 Corintios 12:9" },
-      { texto: "Si Dios es por nosotros, ¿quién contra nosotros?", cita: "Romanos 8:31" },
-      { texto: "El Señor es mi pastor; nada me faltará.", cita: "Salmo 23:1" },
-      { texto: "La paz de Dios, que sobrepasa todo entendimiento, guardará vuestros corazones.", cita: "Filipenses 4:7" }
+      { texto: "Todo lo puedo en Cristo que me fortalece.", cita: "Filipenses 4:13" }
     ];
 
     function cargarVersiculo() {
       const indice = Math.floor(Math.random() * versiculos.length);
-      const textoElem = document.getElementById('versiculo-texto');
-      const citaElem = document.getElementById('versiculo-cita');
-      if (textoElem && citaElem) {
-        textoElem.innerText = `"${versiculos[indice].texto}"`;
-        citaElem.innerText = `— ${versiculos[indice].cita}`;
-      }
+      document.getElementById('versiculo-texto').innerText = `"${versiculos[indice].texto}"`;
+      document.getElementById('versiculo-cita').innerText = `— ${versiculos[indice].cita}`;
     }
-
     document.addEventListener('DOMContentLoaded', cargarVersiculo);
   </script>
 </PageLayout>

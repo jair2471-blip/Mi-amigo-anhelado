@@ -2,121 +2,751 @@
 import PageLayout from '../layouts/PageLayout.astro';
 ---
 
-<PageLayout title="Reflexiones de Verdad">
+<PageLayout title="Cápsulas de Verdad - Mi Amigo Anhelado">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style is:inline>
+    :root {
+      --primary: #1a4d2e;
+      --primary-light: #2d6a4f;
+      --accent: #d4a574;
+      --accent-light: #e8c9a0;
+      --accent-dark: #b8865f;
+      --bg-main: #faf8f5;
+      --bg-secondary: #f5f1eb;
+      --surface: rgba(255, 255, 255, 0.95);
+      --text-main: #1a202c;
+      --text-secondary: #4a5568;
+      --text-muted: #718096;
+      --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.12);
+      --shadow-xl: 0 30px 70px rgba(0, 0, 0, 0.15);
+    }
+
+    body.dark-mode {
+      --bg-main: #0a0e0d;
+      --bg-secondary: #1a1f1e;
+      --surface: rgba(30, 37, 34, 0.95);
+      --text-main: #f7fafc;
+      --text-secondary: #e2e8f0;
+      --text-muted: #a0aec0;
+      --primary: #52b788;
+      --primary-light: #74c69d;
+      --accent: #f4a261;
+      --accent-light: #e9c46a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--bg-main) 0%, var(--bg-secondary) 100%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      font-family: 'Lora', Georgia, serif;
+      line-height: 1.8;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Patrón decorativo de fondo */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(212, 165, 116, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 85% 80%, rgba(26, 77, 46, 0.04) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .reflexiones-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header Hero Section */
+    .header-section {
+      text-align: center;
+      margin-bottom: 5rem;
+      padding: 4rem 2rem;
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      border-radius: 32px;
+      box-shadow: var(--shadow-lg);
+      border: 2px solid rgba(212, 165, 116, 0.2);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInDown 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .header-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
+      background-size: 200% 100%;
+      animation: gradientShift 3s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .pre-title {
+      display: inline-block;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      font-family: 'Montserrat', sans-serif;
+      padding: 0.5rem 1.5rem;
+      background: linear-gradient(135deg, rgba(212, 165, 116, 0.1), rgba(212, 165, 116, 0.05));
+      border-radius: 50px;
+      border: 1px solid rgba(212, 165, 116, 0.3);
+    }
+
+    .header-section h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .intro-text {
+      font-size: clamp(1.1rem, 3vw, 1.4rem);
+      color: var(--text-secondary);
+      font-style: italic;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      line-height: 1.8;
+    }
+
+    .divider {
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      margin: 0 auto;
+      border-radius: 2px;
+    }
+
+    /* Toggle Button */
+    .mode-toggle {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      z-index: 1000;
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(212, 165, 116, 0.3);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .mode-toggle:hover {
+      transform: scale(1.1) rotate(15deg);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .mode-toggle span {
+      font-size: 1.5rem;
+    }
+
+    /* Grid de Reflexiones */
+    .grid-reflexiones {
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+    }
+
+    /* Card Premium */
+    .card-reflexion {
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      border-radius: 28px;
+      padding: 0;
+      box-shadow: var(--shadow-md);
+      border: 2px solid rgba(212, 165, 116, 0.2);
+      overflow: hidden;
+      position: relative;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: cardReveal 0.8s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+    }
+
+    .card-reflexion:nth-child(1) { animation-delay: 0.1s; }
+    .card-reflexion:nth-child(2) { animation-delay: 0.2s; }
+    .card-reflexion:nth-child(3) { animation-delay: 0.3s; }
+    .card-reflexion:nth-child(4) { animation-delay: 0.4s; }
+
+    @keyframes cardReveal {
+      from {
+        opacity: 0;
+        transform: translateY(60px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .card-reflexion::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card-reflexion:hover::before {
+      transform: scaleX(1);
+    }
+
+    .card-reflexion:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--accent);
+    }
+
+    .card-content {
+      padding: 3rem;
+    }
+
+    .topic {
+      display: inline-block;
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-family: 'Montserrat', sans-serif;
+      padding: 0.4rem 1rem;
+      background: linear-gradient(135deg, rgba(212, 165, 116, 0.15), rgba(212, 165, 116, 0.05));
+      border-radius: 50px;
+      border: 1px solid rgba(212, 165, 116, 0.3);
+      margin-bottom: 1.5rem;
+    }
+
+    .card-reflexion h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.75rem, 5vw, 2.5rem);
+      font-weight: 700;
+      margin: 1rem 0 2.5rem 0;
+      color: var(--text-main);
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+
+    /* Bible Quote Premium */
+    .bible-quote {
+      margin: 0 0 2.5rem 0;
+      padding: 2.5rem;
+      background: linear-gradient(135deg, rgba(26, 77, 46, 0.05) 0%, rgba(212, 165, 116, 0.05) 100%);
+      border-radius: 20px;
+      border-left: 5px solid var(--accent);
+      font-size: clamp(1.15rem, 3vw, 1.35rem);
+      line-height: 1.8;
+      color: var(--primary);
+      font-weight: 600;
+      font-style: italic;
+      position: relative;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .bible-quote::before {
+      content: '"';
+      position: absolute;
+      top: 0;
+      left: 1.5rem;
+      font-size: 5rem;
+      color: var(--accent);
+      opacity: 0.2;
+      font-family: 'Playfair Display', serif;
+      line-height: 1;
+    }
+
+    .bible-quote cite {
+      display: block;
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      text-align: right;
+      font-weight: 600;
+      font-style: normal;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .bible-quote cite::before {
+      content: '— ';
+    }
+
+    /* Reflection Body */
+    .reflection-body {
+      margin-top: 2rem;
+      font-size: clamp(1.05rem, 2.5vw, 1.2rem);
+      line-height: 2;
+      color: var(--text-secondary);
+      padding-left: 1.5rem;
+      border-left: 3px solid rgba(212, 165, 116, 0.2);
+    }
+
+    .reflection-body p {
+      margin-bottom: 1.5rem;
+    }
+
+    /* Share Area Premium */
+    .share-area {
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 2px dashed rgba(212, 165, 116, 0.2);
+      display: flex;
+      justify-content: center;
+    }
+
+    .btn-whatsapp {
+      background: linear-gradient(135deg, #25d366 0%, #20ba5a 100%);
+      color: white;
+      border: none;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-whatsapp::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .btn-whatsapp:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .btn-whatsapp:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+    }
+
+    .btn-whatsapp:active {
+      transform: translateY(-1px) scale(1.02);
+    }
+
+    .btn-whatsapp::after {
+      content: '📤';
+      font-size: 1.25rem;
+      transition: transform 0.3s;
+    }
+
+    .btn-whatsapp:hover::after {
+      transform: translateX(5px);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      color: var(--text-main);
+      padding: 1.25rem 2rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow-xl);
+      border: 2px solid var(--accent);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      opacity: 0;
+      transform: translateX(400px);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .toast-icon {
+      font-size: 1.5rem;
+    }
+
+    /* Floating Action Button */
+    .fab-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 999;
+    }
+
+    .fab {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.75rem;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: none;
+    }
+
+    .fab:hover {
+      transform: scale(1.1) rotate(90deg);
+      box-shadow: var(--shadow-xl);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .reflexiones-container {
+        padding: 2rem 1rem 4rem;
+      }
+
+      .header-section {
+        padding: 2.5rem 1.5rem;
+        margin-bottom: 3rem;
+      }
+
+      .card-content {
+        padding: 2rem 1.5rem;
+      }
+
+      .bible-quote {
+        padding: 1.75rem 1.5rem;
+        font-size: 1.1rem;
+      }
+
+      .bible-quote::before {
+        font-size: 3rem;
+        left: 1rem;
+      }
+
+      .reflection-body {
+        padding-left: 1rem;
+        font-size: 1.05rem;
+      }
+
+      .btn-whatsapp {
+        padding: 0.875rem 1.75rem;
+        font-size: 0.9rem;
+      }
+
+      .grid-reflexiones {
+        gap: 2.5rem;
+      }
+
+      .mode-toggle {
+        top: 1rem;
+        right: 1rem;
+        width: 45px;
+        height: 45px;
+      }
+
+      .toast {
+        bottom: 1rem;
+        right: 1rem;
+        left: 1rem;
+        padding: 1rem 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-section h1 {
+        font-size: 2rem;
+      }
+
+      .card-reflexion h2 {
+        font-size: 1.5rem;
+      }
+
+      .bible-quote {
+        padding: 1.5rem 1.25rem;
+      }
+    }
+
+    /* Scrollbar personalizado */
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-main);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--primary) 0%, var(--accent) 100%);
+      border-radius: 10px;
+      border: 2px solid var(--bg-main);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, var(--accent) 0%, var(--primary) 100%);
+    }
+
+    /* Animación de entrada suave */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    body {
+      animation: fadeIn 0.5s ease;
+    }
+  </style>
+
   <div class="reflexiones-container">
+    <!-- Mode Toggle Button -->
+    <button class="mode-toggle" onclick="toggleDarkMode()" aria-label="Cambiar tema">
+      <span id="modeIcon">🌙</span>
+    </button>
+
+    <!-- Header Hero -->
     <header class="header-section">
-      <span class="pre-title">Sabiduría Eterna</span>
+      <span class="pre-title">✨ Sabiduría Eterna</span>
       <h1>Cápsulas de Verdad</h1>
       <p class="intro-text">La enseñanza de Dios y el Señor Jesucristo aplicada a tu presente.</p>
       <div class="divider"></div>
     </header>
 
+    <!-- Grid de Reflexiones -->
     <div class="grid-reflexiones">
+      <!-- Reflexión 1 -->
       <article class="card-reflexion">
         <div class="card-content">
           <span class="topic">Sobre el Fundamento</span>
           <h2>La Tormenta y la Roca</h2>
           <blockquote class="bible-quote">
-            "Cualquiera, pues, que me oye estas palabras, y las hace, le compararé a un hombre prudente, que edificó su casa sobre la roca."
-            <cite>— Jesucristo (Mateo 7:24)</cite>
+            Cualquiera, pues, que me oye estas palabras, y las hace, le compararé a un hombre prudente, que edificó su casa sobre la roca.
+            <cite>Jesucristo (Mateo 7:24)</cite>
           </blockquote>
           <div class="reflection-body">
             <p>La paz no es la ausencia de problemas, sino saber en quién confías mientras los atraviesas. Si tu fundamento es la Roca, la tormenta solo demuestra lo firme que estás.</p>
           </div>
           <div class="share-area">
             <button class="btn-whatsapp" onclick="compartirMensaje(this)">
-                <span>Compartir Esperanza</span>
+              <span>Compartir Esperanza</span>
             </button>
           </div>
         </div>
       </article>
 
+      <!-- Reflexión 2 -->
       <article class="card-reflexion">
         <div class="card-content">
           <span class="topic">Sobre el Mañana</span>
           <h2>El Afán: Ladrón del Presente</h2>
           <blockquote class="bible-quote">
-            "¿Y quién de vosotros podrá, por mucho que se afane, añadir a su estatura un codo?"
-            <cite>— Jesucristo (Mateo 6:27)</cite>
+            ¿Y quién de vosotros podrá, por mucho que se afane, añadir a su estatura un codo?
+            <cite>Jesucristo (Mateo 6:27)</cite>
           </blockquote>
           <div class="reflection-body">
             <p>El afán es un motor que hace ruido pero no avanza. La enseñanza pura es el descanso activo: haz tu parte hoy y deja que el Creador de los tiempos gestione el calendario.</p>
           </div>
           <div class="share-area">
             <button class="btn-whatsapp" onclick="compartirMensaje(this)">
-                <span>Compartir Esperanza</span>
+              <span>Compartir Esperanza</span>
             </button>
           </div>
         </div>
       </article>
 
+      <!-- Reflexión 3 -->
       <article class="card-reflexion">
         <div class="card-content">
           <span class="topic">Sobre la Libertad</span>
           <h2>La Verdad que Liberta</h2>
           <blockquote class="bible-quote">
-            "Y conoceréis la verdad, y la verdad os hará libres."
-            <cite>— Jesucristo (Juan 8:32)</cite>
+            Y conoceréis la verdad, y la verdad os hará libres.
+            <cite>Jesucristo (Juan 8:32)</cite>
           </blockquote>
           <div class="reflection-body">
             <p>La Verdad no es una opinión ni un sentimiento, es una Persona. La verdadera libertad no es hacer lo que uno quiere, sino tener el poder de hacer lo que es correcto ante Dios.</p>
           </div>
           <div class="share-area">
             <button class="btn-whatsapp" onclick="compartirMensaje(this)">
-                <span>Compartir Esperanza</span>
+              <span>Compartir Esperanza</span>
             </button>
           </div>
         </div>
       </article>
-    </div>
-  </div>
-<article class="card-reflexion">
+
+      <!-- Reflexión 4 -->
+      <article class="card-reflexion">
         <div class="card-content">
           <span class="topic">Sobre tu Valor</span>
           <h2>Tu Identidad no es lo que haces</h2>
           <blockquote class="bible-quote">
-            "Mirad cuál amor nos ha dado el Padre, para que seamos llamados hijos de Dios..."
-            <cite>— Apóstol Juan (1 Juan 3:1)</cite>
+            Mirad cuál amor nos ha dado el Padre, para que seamos llamados hijos de Dios...
+            <cite>Apóstol Juan (1 Juan 3:1)</cite>
           </blockquote>
           <div class="reflection-body">
             <p>El mundo te define por tus logros, tu dinero o tus errores. Pero el Mejor nos enseña algo diferente: tu valor es el precio que alguien estuvo dispuesto a pagar por ti. Dios pagó con Su Hijo. No eres lo que dicen de ti, eres lo que Dios dice que eres: Su hijo amado.</p>
           </div>
           <div class="share-area">
             <button class="btn-whatsapp" onclick="compartirMensaje(this)">
-                <span>Compartir Identidad</span>
+              <span>Compartir Identidad</span>
             </button>
           </div>
         </div>
       </article>
+    </div>
+  </div>
 
-  <style>
-    .reflexiones-container { max-width: 800px; margin: 0 auto; padding: 4rem 1.5rem; }
-    .header-section { text-align: center; margin-bottom: 5rem; }
-    .pre-title { display: block; color: #d4a574; text-transform: uppercase; letter-spacing: 3px; font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem; }
-    h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 8vw, 3.5rem); color: #1a4d2e; margin-bottom: 1rem; }
-    .intro-text { font-size: 1.2rem; color: #5d6d7e; font-style: italic; }
-    .divider { width: 60px; height: 3px; background: #d4a574; margin: 2rem auto; }
-    .grid-reflexiones { display: flex; flex-direction: column; gap: 4rem; }
-    .card-reflexion { background: #ffffff; border-radius: 8px; padding: 3rem; box-shadow: 0 10px 40px rgba(0,0,0,0.03); border-left: 1px solid rgba(212, 165, 116, 0.3); }
-    .topic { color: #d4a574; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
-    h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin: 1rem 0 2rem 0; color: #1a202c; }
-    .bible-quote { margin: 0; padding: 1.5rem 2rem; background: #f9fbf9; border-radius: 8px; font-size: 1.25rem; line-height: 1.6; color: #1a4d2e; font-weight: 600; }
-    .bible-quote cite { display: block; margin-top: 1rem; font-size: 0.9rem; color: #5d6d7e; text-align: right; font-weight: normal; }
-    .reflection-body { margin-top: 2rem; font-size: 1.15rem; line-height: 1.9; color: #4a5568; }
-    .share-area { margin-top: 2rem; border-top: 1px dashed #eee; padding-top: 1.5rem; }
-    .btn-whatsapp { background: #25d366; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 50px; font-weight: bold; cursor: pointer; }
-    @media (max-width: 600px) { .card-reflexion { padding: 1.5rem; } }
-  </style>
+  <!-- Scroll to Top FAB -->
+  <div class="fab-container">
+    <button class="fab" onclick="scrollToTop()" aria-label="Volver arriba">
+      ↑
+    </button>
+  </div>
 
   <script is:inline>
+    // Compartir mensaje en WhatsApp
     function compartirMensaje(btn) {
-        const card = btn.closest('.card-reflexion');
-        const titulo = card.querySelector('h2').innerText;
-        const cita = card.querySelector('.bible-quote').innerText;
-        const url = window.location.href;
-        const textoFinal = `📖 *${titulo}*\n\n${cita}\n\nLee más en: ${url}`;
-        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(textoFinal)}`;
-        window.open(whatsappUrl, '_blank');
+      const card = btn.closest('.card-reflexion');
+      const titulo = card.querySelector('h2').innerText;
+      const cita = card.querySelector('.bible-quote').innerText.replace(/\n\s+/g, '\n');
+      const reflexion = card.querySelector('.reflection-body p').innerText;
+      const url = window.location.href;
+      
+      const textoFinal = `📖 *${titulo}*\n\n${cita}\n\n💭 ${reflexion}\n\n🔗 Lee más reflexiones en:\n${url}`;
+      const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(textoFinal)}`;
+      
+      window.open(whatsappUrl, '_blank');
+      showToast('✓ Abriendo WhatsApp...');
     }
+
+    // Toggle Dark Mode
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      document.getElementById('modeIcon').textContent = isDark ? '☀️' : '🌙';
+      localStorage.setItem('reflexiones_darkmode', isDark);
+      showToast(isDark ? '🌙 Modo oscuro activado' : '☀️ Modo claro activado');
+    }
+
+    // Scroll to top
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    // Toast notification
+    function showToast(message) {
+      const existingToast = document.querySelector('.toast');
+      if (existingToast) {
+        existingToast.remove();
+      }
+
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `
+        <span class="toast-icon">✨</span>
+        <span>${message}</span>
+      `;
+      document.body.appendChild(toast);
+
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 400);
+      }, 3000);
+    }
+
+    // Load saved preferences
+    if (localStorage.getItem('reflexiones_darkmode') === 'true') {
+      document.body.classList.add('dark-mode');
+      document.getElementById('modeIcon').textContent = '☀️';
+    }
+
+    // Mostrar FAB solo cuando se hace scroll
+    const fab = document.querySelector('.fab-container');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        fab.style.opacity = '1';
+        fab.style.pointerEvents = 'auto';
+      } else {
+        fab.style.opacity = '0';
+        fab.style.pointerEvents = 'none';
+      }
+    });
+
+    fab.style.opacity = '0';
+    fab.style.transition = 'opacity 0.3s';
   </script>
 </PageLayout>

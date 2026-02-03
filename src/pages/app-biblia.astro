@@ -1245,8 +1245,12 @@ import PageLayout from '../layouts/PageLayout.astro';
 
       document.getElementById('contenido').innerHTML = lectura
         .map((it, idx) => {
-          const cap = bibleData[it.f.toLowerCase()]?.[it.c];
-          if (!cap) return '';
+         const key = bookAlias[it.f] || it.f;
+         const cap = bibleData[key]?.[it.c];
+        if (!cap) {
+        console.warn('Libro no encontrado:', it.f, 'cap', it.c);
+        return '';
+        }
 
           return `
           <details ${idx === 0 ? 'open' : ''} class="capitulo-acordeon">

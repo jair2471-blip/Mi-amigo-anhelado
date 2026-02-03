@@ -199,161 +199,89 @@ import PageLayout from '../layouts/PageLayout.astro';
   </div>
 
   <script is:inline>
-    const booksDB = [
-      { n: 'Génesis', f: 'genesis', c: 50 }, { n: 'Éxodo', f: 'exodo', c: 40 }, { n: 'Levítico', f: 'levitico', c: 27 },
-      { n: 'Números', f: 'numeros', c: 36 }, { n: 'Deuteronomio', f: 'deuteronomio', c: 34 }, { n: 'Josué', f: 'josue', c: 24 },
-      { n: 'Jueces', f: 'jueces', c: 21 }, { n: 'Rut', f: 'rut', c: 4 }, { n: '1 Samuel', f: '1_samuel', c: 31 },
-      { n: '2 Samuel', f: '2_samuel', c: 24 }, { n: '1 Reyes', f: '1_reyes', c: 22 }, { n: '2 Reyes', f: '2_reyes', c: 25 },
-      { n: 'Mateo', f: 'mateo', c: 28 }, { n: 'Marcos', f: 'marcos', c: 16 }, { n: 'Lucas', f: 'lucas', c: 24 },
-      { n: 'Juan', f: 'juan', c: 21 }, { n: 'Hechos', f: 'hechos', c: 28 }, { n: 'Apocalipsis', f: 'apocalipsis', c: 22 }
-      // Puedes agregar el resto de los libros siguiendo este formato
-    ];
+  // ... (aquí va tu lista de booksDB y la variable plan que ya tienes)
 
-    let plan = [];
-    booksDB.forEach(b => {
-      for (let i = 1; i <= b.c; i++) plan.push({ n: b.n, f: b.f, c: i });
-    });
+  // 1. ESTA FUNCIÓN ES LA QUE CARGA LOS LIBROS EN EL CUADRO
+  function renderBiblioteca() {
+    const grid = document.getElementById('gridLibros');
+    if (!grid) return;
 
-    let fechaActual = new Date();
-    let fontSize = parseInt(localStorage.getItem('biblia_font')) || 20;
-    let highlights = JSON.parse(localStorage.getItem('biblia_highlights')) || {};
-    let selectedVId = null;
-    let selectedText = "";
+    grid.innerHTML = booksDB.map(libro => `
+      <button onclick="seleccionarLibro('${libro.f}', '${libro.n}')">
+        ${libro.n}
+      </button>
+    `).join('');
+  }
 
-    // --- FUNCIÓN CLAVE: Llenar la biblioteca ---
-    function renderBiblioteca() {
-      const grid = document.getElementById('gridLibros');
-      grid.innerHTML = booksDB.map(libro => `
-        <button class="btn-libro-grid" onclick="seleccionarLibro('${libro.f}', '${libro.n}')">
-          ${libro.n}
-        </button>
-      `).join('');
+  // 2. MODIFICA TU FUNCIÓN DE ABRIR PARA QUE LLAME A LA ANTERIOR
+  window.abrirBiblioteca = () => {
+    document.getElementById('modalBiblioteca').style.display = 'grid';
+    renderBiblioteca(); // <--- Muy importante llamar esto aquí
+  };
+
+  window.cerrarBiblioteca = () => {
+    document.getElementById('modalBiblioteca').style.display = 'none';
+  };
+
+  // 3. FUNCIÓN PARA SELECCIONAR EL LIBRO
+  window.seleccionarLibro = (f, n) => {
+    cerrarBiblioteca();
+    // Cargamos el capítulo 1 del libro seleccionado
+    cargarLectura([{ n, f, c: 1 }]);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    showToast(`Abriendo ${n}`, '📖');
+  };
+
+  // 4. ASEGÚRATE DE QUE TU FUNCIÓN cargarLectura USE LA API CORRECTA
+  async function cargarLectura(especifico = null) {
+    const contenedor = document.getElementById('lecturaContenedor');
+    contenedor.innerHTML = '<div class="skeleton" style="height:300px"></div>';
+
+    let items = especifico;
+    if (!especifico) {
+      const hoy = new Date();
+      const inicio = new Date(hoy.getFullYear(), 0, 0);
+      const diaDelAnio = Math.floor((hoy - inicio) / 86400000);
+      const startIdx = (diaDelAnio - 1) * 3;
+      items = plan.slice(startIdx, startIdx + 3);
+      updateProgressRing(diaDelAnio);
     }
 
-    window.abrirBiblioteca = () => {
-      document.getElementById('modalBiblioteca').style.display = 'grid';
-      renderBiblioteca(); // Llenamos el grid al abrir
-    };
-
-    window.cerrarBiblioteca = () => {
-      document.getElementById('modalBiblioteca').style.display = 'none';
-    };
-
-    window.filtrarLibros = () => {
-      const busqueda = document.getElementById('busquedaLibro').value.toLowerCase();
-      const botones = document.querySelectorAll('.btn-libro-grid');
-      botones.forEach(btn => {
-        const nombre = btn.innerText.toLowerCase();
-        btn.style.display = nombre.includes(busqueda) ? 'block' : 'none';
-      });
-    };
-
-    window.seleccionarLibro = (f, n) => {
-      cerrarBiblioteca();
-      cargarLectura([{ n, f, c: 1 }]);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-
-    async function cargarLectura(especifico = null) {
-      const contenedor = document.getElementById('lecturaContenedor');
-      contenedor.innerHTML = '<div style="text-align:center">Cargando Palabra...</div>';
-
-      let itemsAMostrar = especifico;
-      if (!especifico) {
-        const inicioAnio = new Date(fechaActual.getFullYear(), 0, 0);
-        const dif = fechaActual - inicioAnio;
-        const diaDelAnio = Math.floor(dif / (1000 * 60 * 60 * 24));
-        const startIdx = (diaDelAnio - 1) * 3;
-        itemsAMostrar = plan.slice(startIdx, startIdx + 3);
+    let html = '';
+    for (const it of items) {
+      try {
+        // Usamos la API de Deno que es muy estable
+        const res = await fetch(`https://bible-api.deno.dev/api/read/rvv1960/${it.f}/${it.c}`);
+        const data = await res.json();
         
-        // Actualizar UI Progreso
-        document.getElementById('ringDay').innerText = diaDelAnio;
-        const progress = (diaDelAnio / 365) * 326.7;
-        document.getElementById('ringProgress').style.strokeDashoffset = 326.7 - progress;
+        html += `
+          <details open class="capitulo-acordeon">
+            <summary class="header-info">
+              <h2>${it.n} ${it.c}</h2>
+              <span>▼</span>
+            </summary>
+            <div class="versiculos">
+              ${data.vers.map(v => `
+                <div class="versiculo" onclick="activarMenu(this, '${it.n} ${it.c}:${v.number}', '${it.f}_${it.c}_${v.number}')">
+                  <span class="num">${v.number}</span>
+                  <span class="txt">${v.verse}</span>
+                </div>
+              `).join('')}
+            </div>
+          </details>
+        `;
+      } catch (e) {
+        console.error("Error cargando:", it.n, e);
       }
-
-      let html = '';
-      for (const it of itemsAMostrar) {
-        try {
-          const res = await fetch(`https://bible-api.deno.dev/api/read/rvv1960/${it.f}/${it.c}`);
-          const data = await res.json();
-          
-          html += `
-            <details open class="capitulo-acordeon">
-              <summary class="header-info">
-                <h3>${it.n} ${it.c}</h3>
-                <span>▼</span>
-              </summary>
-              <div class="versiculos" style="font-size: ${fontSize}px">
-                ${data.vers.map(v => {
-                  const vId = `${it.f}_${it.c}_${v.number}`;
-                  const hClass = highlights[vId] || '';
-                  return `
-                    <div class="versiculo ${hClass}" onclick="activarAcciones(this, '${vId}', '${it.n} ${it.c}:${v.number}', '${v.verse.replace(/'/g, "\\'")}')">
-                      <span class="num">${v.number}</span>
-                      <span class="txt">${v.verse}</span>
-                    </div>
-                  `;
-                }).join('')}
-              </div>
-            </details>
-          `;
-        } catch (e) { console.error(e); }
-      }
-      contenedor.innerHTML = html;
     }
+    contenedor.innerHTML = html || '<p>Error al cargar la lectura. Revisa tu conexión.</p>';
+  }
 
-    window.activarAcciones = (el, vId, ref, texto) => {
-      document.querySelectorAll('.versiculo').forEach(v => v.classList.remove('active'));
-      el.classList.add('active');
-      selectedVId = vId;
-      selectedText = `${ref} - "${texto}"`;
-      document.getElementById('menuAcciones').classList.add('active');
-    };
+  // ... (el resto de tus funciones como activarMenu, resaltar, etc.)
 
-    window.resaltar = (color) => {
-      if (!selectedVId) return;
-      highlights[selectedVId] = color;
-      localStorage.setItem('biblia_highlights', JSON.stringify(highlights));
-      cargarLectura(); // Recargar para aplicar
-      document.getElementById('menuAcciones').classList.remove('active');
-    };
-
-    window.copiarVersiculo = () => {
-      navigator.clipboard.writeText(selectedText);
-      showToast("Copiado al portapapeles");
-      document.getElementById('menuAcciones').classList.remove('active');
-    };
-
-    window.cambiarTamano = (n) => {
-      fontSize += n;
-      localStorage.setItem('biblia_font', fontSize);
-      document.querySelectorAll('.versiculos').forEach(v => v.style.fontSize = fontSize + 'px');
-    };
-
-    window.toggleModo = () => {
-      document.body.classList.toggle('dark-mode');
-    };
-
-    window.cambiarDia = (d) => {
-      fechaActual.setDate(fechaActual.getDate() + d);
-      cargarLectura();
-    };
-
-    window.irAHoy = () => {
-      fechaActual = new Date();
-      cargarLectura();
-    };
-
-    function showToast(msg) {
-      const t = document.createElement('div');
-      t.className = 'toast show';
-      t.innerText = msg;
-      document.body.appendChild(t);
-      setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 500); }, 2000);
-    }
-
-    // Inicio
+  // Iniciar la aplicación
+  document.addEventListener('DOMContentLoaded', () => {
     cargarLectura();
-  </script>
+  });
+</script>
 </PageLayout>

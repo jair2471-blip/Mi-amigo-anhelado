@@ -69,72 +69,99 @@ import PageLayout from '../layouts/PageLayout.astro';
   </div>
 
   <script is:inline>
-    const url = "https://raw.githubusercontent.com/jair2471-blip/vivenciasbiblicas/main/vivencias-biblia.json";
-    let vivencias = [];
-    let indice = 0;
+  const url = "https://raw.githubusercontent.com/jair2471-blip/vivenciasbiblicas/main/vivencias-biblia.json";
+  let vivencias = [];
+  let indice = 0;
 
-    async function cargar() {
-      try {
-        const r = await fetch(url);
-        const data = await r.json();
-        
-        // Extraer los personajes del JSON
-        Object.values(data.personajes).forEach(p => {
-          Object.values(p).forEach(v => vivencias.push(v));
-        });
-
-        // Índice diario
-        const hoy = Math.floor(Date.now() / 86400000);
-        indice = hoy % vivencias.length;
-
-        pintar();
-      } catch (e) {
-        document.getElementById("contenido-vivencia").innerHTML = "❌ Error al cargar las vivencias.";
-      }
-    }
-
-    function pintar() {
-      const v = vivencias[indice];
-      document.getElementById("contador").innerText = `📘 RELATO ${indice + 1} DE ${vivencias.length}`;
+  async function cargar() {
+    try {
+      const r = await fetch(url);
+      const data = await r.json();
       
-      document.getElementById("contenido-vivencia").innerHTML = `
-        <div class="vivencia-card">
-          <h3>🌟 Personaje e Historia</h3>
-          <h2>${v.personaje}</h2>
-          <p style="color:var(--accent); font-weight:600; margin-bottom:15px;">Tema: ${v.categoria}</p>
-          <p style="font-size:1.2rem; line-height:1.8;">${v.vivencia}</p>
-          
-          <div class="section-divider"></div>
-          
-          <h3>✝️ Versículo de Poder</h3>
-          <p style="font-style:italic; font-size:1.3rem; color:var(--primary);">"${v.versiculo}"</p>
-          <p><small>${v.extra}</small></p>
+      // Limpiamos la lista por si acaso
+      vivencias = [];
+      
+      // Extraemos todos los personajes correctamente
+      Object.values(data.personajes).forEach(p => {
+        Object.values(p).forEach(v => {
+          // Guardamos el objeto completo de la vivencia
+          vivencias.push(v);
+        });
+      });
 
-          <div class="section-divider"></div>
+      // Índice diario por defecto
+      const hoy = Math.floor(Date.now() / 86400000);
+      indice = hoy % vivencias.length;
 
-          <h3>🙏 Oración</h3>
-          <p style="font-size:1.1rem; line-height:1.6;">${v.oracion}</p>
-        </div>
-      `;
-      window.scrollTo({top: 0, behavior: 'smooth'});
-    }
-
-    window.siguiente = () => {
-      indice = (indice + 1) % vivencias.length;
-      pintar();
-    };
-
-    window.toggleNoche = () => document.body.classList.toggle('dark-mode');
-
-    document.getElementById("buscador").addEventListener("input", e => {
-      const busqueda = e.target.value.toLowerCase();
-      const found = vivencias.find(v => v.personaje.toLowerCase().includes(busqueda));
-      if (found) {
-        indice = vivencias.indexOf(found);
+      // REVISAR SI VIENE BÚSQUEDA DESDE EL INICIO
+      const params = new URLSearchParams(window.location.search);
+      const query = params.get('buscar');
+      if (query) {
+        buscarPersonaje(query);
+      } else {
         pintar();
       }
-    });
+    } catch (e) {
+      console.error("Error cargando vivencias:", e);
+    }
+  }
 
-    document.addEventListener("DOMContentLoaded", cargar);
-  </script>
+  // FUNCIÓN DE BÚSQUEDA INDEPENDIENTE
+  function buscarPersonaje(nombre) {
+    const busqueda = nombre.toLowerCase().trim();
+    
+    // Buscamos el primer personaje que coincida
+    const encontrado = vivencias.find(v => 
+      v.personaje.toLowerCase().includes(busqueda)
+    );
+
+    if (encontrado) {
+      indice = vivencias.indexOf(encontrado);
+      pintar();
+    } else {
+      // Si no lo encuentra, podemos dar un aviso pequeño
+      console.log("No se encontró el personaje: " + nombre);
+    }
+  }
+
+  // EVENTO PARA EL INPUT DEL BUSCADOR
+  // Asegúrate de que tu input tenga id="buscador"
+  document.addEventListener('DOMContentLoaded', () => {
+    cargar(); // Iniciamos la carga
+
+    const inputBuscador = document.getElementById("buscador");
+    if (inputBuscador) {
+      inputBuscador.addEventListener("input", (e) => {
+        buscarPersonaje(e.target.value);
+      });
+    }
+  });
+
+  // (Mantenemos la función pintar y siguiente igual que antes...)
+  function pintar() {
+    const v = vivencias[indice];
+    if(!v) return;
+    document.getElementById("contador").innerText = `📘 RELATO ${indice + 1} DE ${vivencias.length}`;
+    document.getElementById("contenido-vivencia").innerHTML = `
+      <div class="vivencia-card">
+        <h3>🌟 HISTORIA</h3>
+        <h2>${v.personaje}</h2>
+        <p><strong>${v.categoria}</strong></p>
+        <p style="font-size:1.2rem;">${v.vivencia}</p>
+        <hr/>
+        <h3>✝️ VERSÍCULO</h3>
+        <p><em>"${v.versiculo}"</em></p>
+        <p><small>${v.extra}</small></p>
+        <hr/>
+        <h3>🙏 ORACIÓN</h3>
+        <p>${v.oracion}</p>
+      </div>
+    `;
+  }
+
+  window.siguiente = () => {
+    indice = (indice + 1) % vivencias.length;
+    pintar();
+  };
+</script>
 </PageLayout>

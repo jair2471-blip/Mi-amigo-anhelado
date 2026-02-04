@@ -70,80 +70,69 @@ import PageLayout from '../layouts/PageLayout.astro';
 
 <script is:inline>
   const url = "https://raw.githubusercontent.com/jair2471-blip/vivenciasbiblicas/main/vivencias-biblia.json";
-  let vivencias = [];
+  let vivencias = []; // Aquí meteremos las 64 historias una por una
   let indice = 0;
 
   async function cargar() {
     try {
-      console.log("Iniciando despegue de datos...");
       const r = await fetch(url);
       const data = await r.json();
       
-      vivencias = []; // Limpieza total
+      vivencias = []; 
 
-      // ESTA ES LA CIRUGÍA: Recorremos personajes -> nombres -> vivencias
       if (data && data.personajes) {
-        const nombres = Object.keys(data.personajes); // ['Josué', 'Moisés', 'David', etc.]
-        
-        nombres.forEach(nombre => {
-          const contenidoPersonaje = data.personajes[nombre];
+        // 1. Entramos a los nombres (Josué, Moisés...)
+        for (const nombre in data.personajes) {
+          const bloquePersonaje = data.personajes[nombre];
           
-          // Como cada personaje tiene objetos adentro (1, 2, 3...)
-          Object.values(contenidoPersonaje).forEach(v => {
-            // Solo lo guardamos si tiene los datos que necesitamos
-            if (v && v.personaje) {
+          // 2. Entramos a cada historia numerada (1, 2, 3... 10)
+          for (const num in bloquePersonaje) {
+            const v = bloquePersonaje[num];
+            
+            if (v) {
+              // IMPORTANTE: Si el objeto no trae el nombre adentro, 
+              // le ponemos el nombre de la "familia" (la clave del JSON)
+              if (!v.personaje) v.personaje = nombre;
+              
               vivencias.push(v);
             }
-          });
-        });
+          }
+        }
       }
 
-      console.log("¡Cargados con éxito! Total vivencias encontradas:", vivencias.length);
-      console.log("Lista de nombres disponibles:", vivencias.map(v => v.personaje));
+      console.log("¡Motor cargado! Total de historias encontradas:", vivencias.length);
 
-      // Si no cargó nada, avisar
-      if (vivencias.length === 0) {
-        document.getElementById("contenido-vivencia").innerHTML = "⚠️ No se encontraron datos en el JSON.";
-        return;
-      }
-
-      // Índice diario
-      const hoy = Math.floor(Date.now() / 86400000);
-      indice = hoy % vivencias.length;
-
-      // Verificamos si viene búsqueda del inicio
+      // Configuración inicial
       const params = new URLSearchParams(window.location.search);
       const query = params.get('buscar');
+      
       if (query) {
-        buscarPersonaje(query);
+        ejecutarBusqueda(query);
       } else {
+        const hoy = Math.floor(Date.now() / 86400000);
+        indice = hoy % vivencias.length;
         pintar();
       }
 
     } catch (e) {
-      console.error("Error crítico:", e);
-      document.getElementById("contenido-vivencia").innerHTML = "❌ Error de conexión con el satélite de datos.";
+      console.error("Error en la carga:", e);
+      document.getElementById("contenido-vivencia").innerHTML = "❌ Error al conectar con el servidor de historias.";
     }
   }
 
-  function buscarPersonaje(texto) {
+  function ejecutarBusqueda(texto) {
     if (!texto || vivencias.length === 0) return;
+    const t = texto.toLowerCase().trim();
     
-    const busqueda = texto.toLowerCase().trim();
-    console.log("Buscando a:", busqueda);
-
-    // Buscamos en toda la lista aplanada
-    const idxEncontrado = vivencias.findIndex(v => 
-      v.personaje.toLowerCase().includes(busqueda) || 
-      (v.categoria && v.categoria.toLowerCase().includes(busqueda))
+    // El buscador ahora encuentra la PRIMERA coincidencia de ese personaje
+    const nuevoIndice = vivencias.findIndex(v => 
+      v.personaje.toLowerCase().includes(t) || 
+      (v.categoria && v.categoria.toLowerCase().includes(t))
     );
 
-    if (idxEncontrado !== -1) {
-      console.log("¡Encontrado en posición!", idxEncontrado);
-      indice = idxEncontrado;
+    if (nuevoIndice !== -1) {
+      indice = nuevoIndice;
       pintar();
-    } else {
-      console.log("No hubo suerte con esa búsqueda.");
     }
   }
 
@@ -151,38 +140,40 @@ import PageLayout from '../layouts/PageLayout.astro';
     const v = vivencias[indice];
     if (!v) return;
 
-    const contenedor = document.getElementById("contenido-vivencia");
-    const contador = document.getElementById("contador");
-
-    if (contador) contador.innerText = `📘 VIVENCIA ${indice + 1} DE ${vivencias.length}`;
+    // Actualizamos el contador para que el usuario sepa en qué número va
+    const contElem = document.getElementById("contador");
+    if (contElem) contElem.innerText = `📖 HISTORIA ${indice + 1} DE ${vivencias.length}`;
     
-    // El diseño que a usted le gusta
-    contenedor.innerHTML = `
-      <div class="vivencia-card">
-        <h3 style="color:var(--accent)">🌟 PERSONAJE SAGRADO</h3>
-        <h2 style="font-family:'Playfair Display'; font-size:2.5rem; margin:10px 0;">${v.personaje}</h2>
-        <div style="background:var(--primary); color:white; display:inline-block; padding:5px 15px; border-radius:20px; font-size:0.8rem; margin-bottom:20px;">
-          TEMA: ${v.categoria}
+    const area = document.getElementById("contenido-vivencia");
+    area.innerHTML = `
+      <div class="vivencia-card" style="animation: slideUp 0.4s ease;">
+        <h3 style="color:var(--accent); text-transform:uppercase; letter-spacing:1px;">🌟 Devocional de Personaje</h3>
+        <h2 style="font-family:'Playfair Display'; font-size:2.8rem; color:var(--primary); margin:10px 0;">${v.personaje}</h2>
+        
+        <div style="background:var(--accent); color:white; display:inline-block; padding:4px 12px; border-radius:4px; font-size:0.8rem; font-weight:bold; margin-bottom:20px;">
+          TEMA: ${v.categoria || 'Vivencia'}
         </div>
         
-        <p style="font-size:1.3rem; line-height:1.8; color:var(--text); text-align:justify;">${v.vivencia}</p>
+        <div style="font-size:1.3rem; line-height:1.8; color:var(--text); text-align:justify; margin-bottom:30px;">
+          ${v.vivencia}
+        </div>
         
-        <div style="border-top: 1px solid rgba(0,0,0,0.1); margin:25px 0; padding-top:20px;">
-          <h3 style="color:var(--accent)">✝️ LA PROMESA</h3>
-          <p style="font-style:italic; font-size:1.3rem; color:var(--primary);">"${v.versiculo}"</p>
-          <p><small>${v.extra}</small></p>
+        <div style="background:rgba(0,0,0,0.03); padding:25px; border-radius:15px; border-left:6px solid var(--primary); margin-bottom:25px;">
+          <h3 style="margin-top:0; color:var(--primary);">✝️ LA PALABRA</h3>
+          <p style="font-style:italic; font-size:1.4rem;">"${v.versiculo}"</p>
+          <p style="margin-bottom:0; font-weight:bold; color:var(--accent);"><small>${v.extra || ''}</small></p>
         </div>
 
-        <div style="background:rgba(212, 165, 116, 0.1); padding:25px; border-radius:15px; border-left: 5px solid var(--accent);">
-          <h3 style="margin-top:0;">🙏 ORACIÓN</h3>
-          <p style="font-size:1.1rem; margin-bottom:0;">${v.oracion}</p>
+        <div style="background:var(--primary); color:white; padding:25px; border-radius:15px; box-shadow:0 8px 20px rgba(0,0,0,0.1);">
+          <h3 style="margin-top:0; color:var(--accent);">🙏 ORACIÓN</h3>
+          <p style="font-size:1.1rem; line-height:1.6; margin:0;">${v.oracion}</p>
         </div>
       </div>
     `;
-    // Scroll arriba para leer bien
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  // BOTÓN SIGUIENTE: Ahora navegará por las 64 historias una tras otra
   window.siguiente = () => {
     if (vivencias.length > 0) {
       indice = (indice + 1) % vivencias.length;
@@ -190,15 +181,11 @@ import PageLayout from '../layouts/PageLayout.astro';
     }
   };
 
-  // ARRANCAMOS
   document.addEventListener('DOMContentLoaded', () => {
     cargar();
-    
-    const buscadorInput = document.getElementById("buscador");
-    if (buscadorInput) {
-      buscadorInput.addEventListener("input", (e) => {
-        buscarPersonaje(e.target.value);
-      });
+    const inputB = document.getElementById("buscador");
+    if (inputB) {
+      inputB.addEventListener("input", (e) => ejecutarBusqueda(e.target.value));
     }
   });
 </script>

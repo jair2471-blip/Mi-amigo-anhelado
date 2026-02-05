@@ -26,10 +26,9 @@ En muchas de esas iglesias que hoy criticamos, hay personas que están orando co
 
 ## Crítica vacía vs. Luz transformadora
 
-Criticar por criticar es fácil y alimenta el ego. Pero el seguidor maduro entiende que:
-1. **La Verdad no es un arma para herir:** Es una luz para guiar.
-2. **La vida personal cuenta:** De nada sirve señalar el error ajeno si nuestra propia vida es un desorden. La Verdad debe verse en nuestra paz, nuestra honradez y nuestro amor.
-3. **Dios conoce los corazones:** Hay personas dentro de sistemas equivocados que tienen una relación con Dios más real que muchos que se dicen "conocedores de la doctrina".
+Criticar por criticar es fácil y alimenta el ego. Pero el seguidor maduro entiende que la Verdad no es un arma para herir, sino una luz para guiar. De nada sirve señalar el error ajeno si nuestra propia vida es un desorden; la Verdad debe ser visible en nuestra paz, nuestra honradez y nuestro amor.
+
+Esto se ve en lo cotidiano: **no ganamos a nadie ridiculizando su iglesia, atacando a su pastor o burlándonos de sus prácticas.** Ganamos cuando caminamos con paciencia, cuando hacemos preguntas honestas y cuando dejamos que la Palabra haga el trabajo que el orgullo jamás podrá hacer. Dios conoce los corazones, y hay personas dentro de sistemas equivocados que tienen una relación con Dios más real que muchos que se dicen "conocedores de la doctrina".
 
 **Conclusión:**
 En este espacio, no buscamos destruir iglesias ni atacar personas. Nuestra misión es exponer las Escrituras tal como están escritas. Si la Verdad choca con una institución, que sea la Palabra la que hable. Pero hacia la persona, hacia la "oveja" que busca al **Amigo Anhelado**, solo tenemos una invitación: ven y descansa en la Verdad que liberta.

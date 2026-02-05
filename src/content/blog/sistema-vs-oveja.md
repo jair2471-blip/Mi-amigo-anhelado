@@ -6,11 +6,11 @@ heroImage: ""
 tags: ["Madurez Espiritual", "Amor", "Enseñanza Pura"]
 ---
 
-Es muy fácil caer en la trampa de la crítica amarga. Hoy en día, las redes sociales están llenas de personas que se dicen "cristianas" pero que usan la Biblia como un mazo para golpear a todo el que no piensa como ellos. Sin embargo, el ejemplo del Señor Jesucristo nos muestra un camino muy distinto.
+Es muy fácil caer en la trampa de la crítica amarga. Hoy en día, las redes sociales están llenas de personas que se dicen “cristianas” pero que usan la Biblia como un mazo para golpear a todo el que no piensa como ellos. Sin embargo, el ejemplo del Señor Jesucristo nos muestra un camino muy distinto.
 
 ## La confrontación con el sistema
 
-Jesús fue implacable con el sistema religioso de su época. A los líderes que usaban la fe para lucrarse o para cargar de reglas a la gente, les llamó por su nombre: "hipócritas", "sepulcros blanqueados" y "guías ciegos". Él no negoció con el error.
+Jesús fue implacable con el sistema religioso de su época. A los líderes que usaban la fe para lucrarse o para cargar de reglas a la gente, les llamó por su nombre: “hipócritas”, “sepulcros blanqueados” y “guías ciegos”. Él no negoció con el error.
 
 Pero nota la diferencia: Jesús atacaba la **estructura**, la **mentira** y el **orgullo** de los que mandaban, no a la gente que estaba ahí buscando consuelo.
 
@@ -18,19 +18,22 @@ Pero nota la diferencia: Jesús atacaba la **estructura**, la **mentira** y el *
 
 Mientras Jesús denunciaba al sistema religioso, Su mirada hacia las personas era de profunda compasión:
 
-> "Y al ver las multitudes, tuvo compasión de ellas; porque estaban desamparadas y dispersas como ovejas que no tienen pastor." (Mateo 9:36)
+> “Y al ver las multitudes, tuvo compasión de ellas; porque estaban desamparadas y dispersas como ovejas que no tienen pastor.” (Mateo 9:36)
 
 En muchas de esas iglesias que hoy criticamos, hay personas que están orando con lágrimas, que aman a Dios con sinceridad y que simplemente no han tenido a nadie que les enseñe la **enseñanza pura** sin filtros humanos.
 
-**Amar a la oveja no significa bendecir el error ni decir que todo camino es válido.** Jesús nunca dejó a las personas donde las encontró: al paralítico lo sanó, pero también le dijo “no peques más”; a la mujer samaritana la escuchó, pero no confirmó su confusión. La compasión verdadera no anestesia la conciencia, la despierta. El amor real no te deja en la mentira; te da la mano para sacarte de ella. 
+**Amar a la oveja no significa bendecir el error ni decir que todo camino es válido.** Jesús nunca dejó a las personas donde las encontró: al paralítico lo sanó, pero también le dijo “no peques más”; a la mujer samaritana la escuchó, pero no confirmó su confusión. La compasión verdadera no anestesia la conciencia, la despierta. El amor real no te deja en la mentira; te da la mano para sacarte de ella.
 
 ## Crítica vacía vs. Luz transformadora
 
 Criticar por criticar es fácil y alimenta el ego. Pero el seguidor maduro entiende que la Verdad no es un arma para herir, sino una luz para guiar. De nada sirve señalar el error ajeno si nuestra propia vida es un desorden; la Verdad debe ser visible en nuestra paz, nuestra honradez y nuestro amor.
 
-Esto se ve en lo cotidiano: **no ganamos a nadie ridiculizando su iglesia, atacando a su pastor o burlándonos de sus prácticas.** Ganamos cuando caminamos con paciencia, cuando hacemos preguntas honestas y cuando dejamos que la Palabra haga el trabajo que el orgullo jamás podrá hacer. Dios conoce los corazones, y hay personas dentro de sistemas equivocados que tienen una relación con Dios más real que muchos que se dicen "conocedores de la doctrina".
+Esto se ve en lo cotidiano: **no ganamos a nadie ridiculizando su iglesia, atacando a su pastor o burlándonos de sus prácticas.** Ganamos cuando caminamos con paciencia, cuando hacemos preguntas honestas y cuando dejamos que la Palabra haga el trabajo que el orgullo jamás podrá hacer. Dios conoce los corazones, y hay personas dentro de sistemas equivocados que tienen una relación con Dios más real que muchos que se dicen “conocedores de la doctrina”.
 
-**Conclusión:**
-En este espacio no buscamos destruir iglesias ni atacar personas, pero tampoco maquillamos el error para evitar incomodidades. Creemos que la Verdad bíblica es suficientemente poderosa para confrontar sistemas, y suficientemente tierna para rescatar corazones. Si la Verdad choca con una institución, que sea la Palabra la que hable. Pero hacia la persona, hacia la "oveja" que busca al **Amigo Anhelado**, solo tenemos una invitación: ven y descansa en la Verdad que liberta.
+---
 
-> *El seguidor maduro no elige entre verdad o amor: camina con ambas, aunque eso lo deje sin aplausos.*
+### Conclusión
+
+En este espacio no buscamos destruir iglesias ni atacar personas, pero tampoco maquillamos el error para evitar incomodidades. Creemos que la Verdad bíblica es suficientemente poderosa para confrontar sistemas, y suficientemente tierna para rescatar corazones. Si la Verdad choca con una institución, que sea la Palabra la que hable. Pero hacia la persona, hacia la “oveja” que busca al **Amigo Anhelado**, solo tenemos una invitación: ven y descansa en la Verdad que liberta.
+
+> **El seguidor maduro no elige entre verdad o amor: camina con ambas, aunque eso lo deje sin aplausos.**

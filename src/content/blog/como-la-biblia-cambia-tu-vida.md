@@ -7,8 +7,6 @@ image: "/images/blog-1.jpg"
 tags: ["Biblia", "Transformación", "Fe"]
 ---
 
-# Cómo la Biblia Transforma tu Vida
-
 Mucha gente comienza el año con la intención de leer la Biblia, pero pocos entienden el impacto real de la **enseñanza pura de Dios**.
 
 ## 1. El Poder de la Constancia

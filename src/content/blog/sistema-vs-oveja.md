@@ -31,4 +31,6 @@ Criticar por criticar es fácil y alimenta el ego. Pero el seguidor maduro entie
 Esto se ve en lo cotidiano: **no ganamos a nadie ridiculizando su iglesia, atacando a su pastor o burlándonos de sus prácticas.** Ganamos cuando caminamos con paciencia, cuando hacemos preguntas honestas y cuando dejamos que la Palabra haga el trabajo que el orgullo jamás podrá hacer. Dios conoce los corazones, y hay personas dentro de sistemas equivocados que tienen una relación con Dios más real que muchos que se dicen "conocedores de la doctrina".
 
 **Conclusión:**
-En este espacio, no buscamos destruir iglesias ni atacar personas. Nuestra misión es exponer las Escrituras tal como están escritas. Si la Verdad choca con una institución, que sea la Palabra la que hable. Pero hacia la persona, hacia la "oveja" que busca al **Amigo Anhelado**, solo tenemos una invitación: ven y descansa en la Verdad que liberta.
+En este espacio no buscamos destruir iglesias ni atacar personas, pero tampoco maquillamos el error para evitar incomodidades. Creemos que la Verdad bíblica es suficientemente poderosa para confrontar sistemas, y suficientemente tierna para rescatar corazones. Si la Verdad choca con una institución, que sea la Palabra la que hable. Pero hacia la persona, hacia la "oveja" que busca al **Amigo Anhelado**, solo tenemos una invitación: ven y descansa en la Verdad que liberta.
+
+> *El seguidor maduro no elige entre verdad o amor: camina con ambas, aunque eso lo deje sin aplausos.*

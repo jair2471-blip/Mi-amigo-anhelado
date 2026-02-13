@@ -16,7 +16,7 @@ Hay momentos en la vida espiritual donde el alma se siente vacía, y aquí está
 
 El verdadero despertar espiritual no comienza cuando aprendes más versículos, sino cuando dejas de usarlos como escudo para no mirar tu interior. 
 
-## El Invitación del Maestro: Menos Carga, Más Coherencia
+## La Invitación del Maestro: Menos Carga, Más Coherencia
 Jesús no llamó a los que tenían la vida resuelta, sino a los que estaban **trabajados y cargados**. 
 
 > *"Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar."* (Mateo 11:28)

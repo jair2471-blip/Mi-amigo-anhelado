@@ -1,5 +1,5 @@
 ---
-const { title } = Astro.props;
+const { title, image } = Astro.props;
 // Definimos variables de color para que sea fácil cambiarlas después
 const primaryColor = "#1a4d2e";
 const accentColor = "#d4a574";
@@ -20,7 +20,7 @@ const accentColor = "#d4a574";
     <meta property="og:type" content="website" />
     <meta property="og:title" content={`${title} | Mi Amigo Anhelado`} />
     <meta property="og:description" content="Mensajes bíblicos sin filtros humanos, solo la Verdad de las Escrituras." />
-    <meta property="og:image" content="https://miamigoanhelado.com/og-image.jpg" />
+    <meta property="og:image" content={image?.src || image || "https://miamigoanhelado.com/og-image.jpg"} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

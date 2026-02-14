@@ -1,14 +1,13 @@
 ---
-const { title, description, image } = Astro.props;
+const { title, description, image, pubDate } = Astro.props;
 
 const siteName = "Mi Amigo Anhelado";
 const defaultDescription = "La enseñanza pura de Dios y el Señor Jesucristo.";
-const defaultImage = "https://miamigoanhelado.com/og-image.jpg";
+const defaultImage = "https://www.miamigoanhelado.com/og-image.jpg";
 
-// Construir URL canónica dinámica
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-// Resolver imagen (string u objeto)
+const resolvedDescription = description || defaultDescription;
 const resolvedImage = image?.src || image || defaultImage;
 
 // Colores
@@ -25,7 +24,7 @@ const accentColor = "#d4a574";
 
     <!-- SEO Básico -->
     <title>{title} | {siteName}</title>
-    <meta name="description" content={description || defaultDescription} />
+    <meta name="description" content={resolvedDescription} />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalURL} />
 
@@ -33,17 +32,43 @@ const accentColor = "#d4a574";
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content={siteName} />
     <meta property="og:title" content={`${title} | ${siteName}`} />
-    <meta property="og:description" content={description || defaultDescription} />
+    <meta property="og:description" content={resolvedDescription} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={resolvedImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="es_CO" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={`${title} | ${siteName}`} />
-    <meta name="twitter:description" content={description || defaultDescription} />
+    <meta name="twitter:description" content={resolvedDescription} />
     <meta name="twitter:image" content={resolvedImage} />
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+        {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            headline: title,
+            description: resolvedDescription,
+            image: resolvedImage,
+            datePublished: pubDate,
+            author: {
+                "@type": "Person",
+                name: siteName
+            },
+            publisher: {
+                "@type": "Organization",
+                name: siteName,
+                logo: {
+                    "@type": "ImageObject",
+                    url: defaultImage
+                }
+            },
+            mainEntityOfPage: canonicalURL.toString()
+        })}
+    </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -79,7 +104,6 @@ const accentColor = "#d4a574";
             flex-direction: column;
         }
 
-        /* Nav Optimizada */
         nav {
             padding: 2rem 0;
             text-align: center;
@@ -99,14 +123,10 @@ const accentColor = "#d4a574";
             padding: 5px 10px;
             font-size: 1.1rem;
             transition: all 0.3s ease;
-            position: relative;
         }
 
-        nav a:hover {
-            color: var(--accent);
-        }
+        nav a:hover { color: var(--accent); }
 
-        /* Estilo especial para el botón de Blog/Reflexiones */
         nav a.nav-blog {
             border: 1.5px solid var(--accent);
             border-radius: 25px;
@@ -119,9 +139,7 @@ const accentColor = "#d4a574";
             color: white;
         }
 
-        main {
-            flex: 1; 
-        }
+        main { flex: 1; }
 
         footer {
             text-align: center;
@@ -140,46 +158,48 @@ const accentColor = "#d4a574";
             margin-bottom: 0.5rem;
         }
 
+        .slogan {
+            font-style: italic;
+            color: var(--primary);
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        .footer-line {
+            width: 40px;
+            height: 2px;
+            background: var(--accent);
+            margin: 10px auto;
+        }
+
         @media (max-width: 600px) {
             nav { padding: 1.5rem 0; gap: 0.5rem; }
             nav a { font-size: 0.95rem; padding: 5px; }
             nav a.nav-blog { padding: 5px 12px; }
         }
-        .slogan {
-    font-style: italic;
-    color: var(--primary);
-    font-weight: 600;
-    margin: 10px 0;
-}
-.footer-line {
-    width: 40px;
-    height: 2px;
-    background: var(--accent);
-    margin: 10px auto;
-}
     </style>
 </head>
 <body>
     <div class="layout-container">
         <header>
             <nav>
-                <a href="/">Inicio</a> 
-                <a href="/app-biblia">Biblia</a> 
+                <a href="/">Inicio</a>
+                <a href="/app-biblia">Biblia</a>
                 <a href="/vivencias">Personajes</a>
                 <a href="/blog" class="nav-blog">Reflexiones</a>
             </nav>
         </header>
-        
+
         <main>
-            <slot /> 
+            <slot />
         </main>
 
         <footer>
-    <span class="footer-brand">Mi Amigo Anhelado</span>
-    <p class="slogan">"No interpretamos, solo exponemos lo que está escrito."</p>
-    <p>&copy; {new Date().getFullYear()} — La Verdad que Liberta</p>
-    <div class="footer-line"></div>
-</footer>
+            <span class="footer-brand">Mi Amigo Anhelado</span>
+            <p class="slogan">"No interpretamos, solo exponemos lo que está escrito."</p>
+            <p>&copy; {new Date().getFullYear()} — La Verdad que Liberta</p>
+            <div class="footer-line"></div>
+        </footer>
     </div>
 </body>
 </html>

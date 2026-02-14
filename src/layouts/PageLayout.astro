@@ -1,5 +1,5 @@
 ---
-const { title, image } = Astro.props;
+const { title, description, image } = Astro.props;
 // Definimos variables de color para que sea fácil cambiarlas después
 const primaryColor = "#1a4d2e";
 const accentColor = "#d4a574";
@@ -13,7 +13,7 @@ const accentColor = "#d4a574";
     <meta name="generator" content={Astro.generator} />
     
     <title>{title} | Mi Amigo Anhelado</title>
-    <meta name="description" content="La enseñanza pura de Dios y el Señor Jesucristo. Reflexiones bíblicas y plan de lectura 365 días para una vida transformada." />
+    <meta name="description" content={description || "La enseñanza pura de Dios y el Señor Jesucristo."} />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://miamigoanhelado.com/" />
 

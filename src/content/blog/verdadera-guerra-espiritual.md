@@ -7,8 +7,6 @@ author: "Mi amigo Anhelado"
 tags: ["guerra espiritual", "discernimiento cristiano", "carácter", "iglesia moderna", "fe práctica"]
 ---
 
-# Guerra Espiritual o Circo Religioso: Cuando el Volumen Reemplazó la Santidad
-
 En el cristianismo contemporáneo parece existir una regla no escrita:  
 **entre más fuerte el grito, mayor la unción.**
 

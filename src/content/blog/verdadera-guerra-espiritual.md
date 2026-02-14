@@ -1,17 +1,12 @@
 ---
 title: "Guerra Espiritual o Circo Religioso: Cuando el Volumen Reemplazó la Santidad"
 description: "¿Reprender al diablo es gritar más fuerte o vivir diferente? Una reflexión confrontativa sobre el show espiritual moderno y la verdadera autoridad cristiana."
-pubDate: "2026-02-13"
+pubDate: 2026-02-13
+
+heroImage: "https://images.unsplash.com/photo-1460194436988-671f763436b7?q=80&w=1200&h=630&auto=format&fit=crop&crop=center"
+
 author: "Mi amigo Anhelado"
-image:
-  src: "https://images.unsplash.com/photo-1460194436988-671f763436b7?q=80&w=1200&h=630&auto=format&fit=crop&crop=center"
-  alt: "Guerra espiritual moderna y espectáculo religioso en iglesias"
-tags:
-  - guerra espiritual
-  - discernimiento cristiano
-  - carácter
-  - iglesia moderna
-  - fe práctica
+tags: ["guerra espiritual", "discernimiento cristiano", "carácter", "iglesia moderna", "fe práctica"]
 ---
 
 En el cristianismo contemporáneo parece existir una regla no escrita:  

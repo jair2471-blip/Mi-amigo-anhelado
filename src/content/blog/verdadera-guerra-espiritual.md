@@ -2,7 +2,8 @@
 title: "Guerra Espiritual o Circo Religioso: Cuando el Volumen Reemplazó la Santidad"
 description: "¿Reprender al diablo es gritar más fuerte o vivir diferente? Una reflexión confrontativa sobre el show espiritual moderno y la verdadera autoridad cristiana."
 pubDate: 2026-02-13
-author: "Edgar Montes"
+image: "https://images.unsplash.com/photo-1460194436988-671f763436b7?q=80&w=1200&h=630&auto=format&fit=crop&crop=center"
+author: "Mi amigo Anhelado"
 tags: ["guerra espiritual", "discernimiento cristiano", "carácter", "iglesia moderna", "fe práctica"]
 ---
 

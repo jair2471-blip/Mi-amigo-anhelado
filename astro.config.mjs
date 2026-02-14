@@ -4,7 +4,7 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-    site: 'https://www.miamigoanhelado.com',
+    site: 'https://miamigoanhelado.com',
     base: '/',
     integrations: [mdx(), sitemap()],
 });

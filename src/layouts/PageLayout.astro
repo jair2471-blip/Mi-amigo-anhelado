@@ -46,29 +46,29 @@ const accentColor = "#d4a574";
     <meta name="twitter:image" content={resolvedImage} />
 
     <!-- Schema.org -->
-    <script type="application/ld+json">
-        {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            headline: title,
-            description: resolvedDescription,
-            image: resolvedImage,
-            datePublished: pubDate,
-            author: {
-                "@type": "Person",
-                name: siteName
-            },
-            publisher: {
-                "@type": "Organization",
-                name: siteName,
-                logo: {
-                    "@type": "ImageObject",
-                    url: defaultImage
-                }
-            },
-            mainEntityOfPage: canonicalURL.toString()
-        })}
-    </script>
+    <script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: title,
+    description: resolvedDescription,
+    image: resolvedImage,
+    datePublished: pubDate,
+    author: {
+      "@type": "Person",
+      name: siteName
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteName,
+      logo: {
+        "@type": "ImageObject",
+        url: defaultImage
+      }
+    }
+  })}
+/>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
